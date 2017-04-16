@@ -59,15 +59,16 @@ export default class SideBar extends React.Component{
             <SelectableList defaultValue={1}>
                 <Subheader>监控系统</Subheader>
                 <ListItem value={1} primaryText="今日观察" containerElement={<Link to="/log-frontend/jrgc" />}   leftIcon={<Apps />} />
-                <ListItem value={2} primaryText="访问监控"  leftIcon={<ContentDrafts /> }
+                <ListItem value={2} primaryText="实时监控"  leftIcon={<ContentDrafts /> }
                           nestedItems={[
-                              <ListItem value={21} primaryText="地域分布"   leftIcon={<ContentInbox   /> }             />,
+                              <ListItem value={21} primaryText="异常监控"   leftIcon={<ContentInbox   /> }             />,
+                              <ListItem value={22} primaryText="超时监控"   leftIcon={<ContentInbox   /> }             />,
                           ]}
                 />
-                <ListItem value={3} primaryText="日志报表"  containerElement={<Link to="/log-frontend/shfhsc/sfzcx" />} leftIcon={<ContentSend />  } initiallyOpen={true}
+                <ListItem value={3} primaryText="日志报表"  containerElement={<Link to="/log-frontend/rzbb/scbb/idcard" />} leftIcon={<ContentSend />  } initiallyOpen={true}
                           nestedItems={[
-                              <ListItem value={31} primaryText="时长报表"   leftIcon={<ContentInbox   /> }  containerElement={<Link to="/log-frontend/rzbb/shfhsc/sfzcx" />}            />,
-                              <ListItem value={32} primaryText="异常报表"   leftIcon={<ContentInbox   /> }  containerElement={<Link to="/log-frontend/rzbb/ycbb/sfzcx" />}            />,
+                              <ListItem value={31} primaryText="时长报表"   leftIcon={<ContentInbox   /> }  containerElement={<Link to="/log-frontend/rzbb/scbb/idcard" />}            />,
+                              <ListItem value={32} primaryText="异常报表"   leftIcon={<ContentInbox   /> }  containerElement={<Link to="/log-frontend/rzbb/ycbb/idcard" />}            />,
                           ]}
                 />
                 <ListItem value={4} primaryText="预警系统"  leftIcon={<ActionGrade /> }   initiallyOpen={true}

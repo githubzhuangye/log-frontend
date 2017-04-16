@@ -1,5 +1,5 @@
 import React from 'react';
-import MyEcharts from './MyEcharts.jsx'
+import MyEcharts from './Echarts.jsx'
 
 
 /**
@@ -19,13 +19,13 @@ export default class FanChart extends React.Component {
 
     render() {
         const {baseOptionSet,dataOptionSet, containerId, width, height}=this.props;
-        const {TITLE,  LEGEND_DATA, TOOL_TIP_FORMATTER, } =baseOptionSet;
+        const {FanChart_TITLE,  FanChart_LEGEND_DATA, FanChart_TOOL_TIP_FORMATTER, } =baseOptionSet;
         let {}=baseOptionSet;
         const {DATA_TOTAL,SUB_TITLE}=dataOptionSet;
 
         const baseOption = {
             title: {
-                text: TITLE,
+                text: FanChart_TITLE,
                 x: 'center',
                 subtext: SUB_TITLE,
                 subtextStyle: {
@@ -34,13 +34,14 @@ export default class FanChart extends React.Component {
             },
             tooltip: {
                 trigger: 'item',
-                formatter: TOOL_TIP_FORMATTER,
+                formatter: FanChart_TOOL_TIP_FORMATTER,
             },
             legend: {
                 orient: 'vertical',
                 left: 'right',
+                top:'20%',
                 formatter: '{name}ms',
-                data: LEGEND_DATA,
+                data: FanChart_LEGEND_DATA,
                 selectedMode: true
             },
             series: [
@@ -48,7 +49,7 @@ export default class FanChart extends React.Component {
                     name: 'one',
                     type: 'pie',
                     radius: '58%',
-                    center: ['40%', '50%'],
+                    center: ['40%', '65%'],
                     data: [],
                     label: {
                         normal: {

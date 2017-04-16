@@ -3,10 +3,16 @@
  */
 
 /**
- * 分页常数
+ * 分页常数,用于表格
  * 每页显示10条
  */
 export const pageSize=10;
+
+/**
+ * 分页常数,用于今日头条
+ * @type {number}
+ */
+export const pageSize_Jrtt=5;
 
 /**
  * 根据总数计算页数

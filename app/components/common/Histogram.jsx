@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MyEcharts from './MyEcharts.jsx'
+import MyEcharts from './Echarts.jsx'
 
 
 /**
@@ -19,14 +19,47 @@ export default class Histogram extends React.Component {
     };
 
     render() {
+        //DATA和Histogram_SERIES_NAMES是两个数组,并且size应该相同
         const { baseOptionSet, dataOptionSet,containerId, width, height}=this.props;
-        const {TITLE,  X_AXIS_TITLE, Y_AXIS_TITLE, SERIES_NAME, TOOL_TIP_FORMATTER,   } =baseOptionSet;
-        const {DATA_ONE,DATA_TWO,DATA_TOTAL,SUB_TITLE, X_AXIS_ARRAY,}=dataOptionSet;
+        const {  Histogram_TITLE,Histogram_X_AXIS_TITLE,Histogram_Y_AXIS_TITLE,Histogram_SERIES_NAMES,Histogram_TOOL_TIP_FORMATTER     } =baseOptionSet;
+        const {DATA,SUB_TITLE, X_AXIS_ARRAY,}=dataOptionSet;
+        //柱状图的颜色列表
+        const colors=['rgba(17, 168,171, 1)','#FF1493','#800080'];
+
+        //1.根据Histogram_SERIES_NAMES的size生成baseOption中用到的series
+        let baseSeries=[];
+        Histogram_SERIES_NAMES.map((h,i)=>{
+            let serie={
+                name: h,
+                type: 'bar',
+                data: [],
+                barMinHeight: 2,
+                barMaxWidth:30,
+                itemStyle: {
+                    normal: {
+                        color: colors[i],
+                        shadowColor: 'rgba(0, 0, 0, 0.1)',
+                        shadowBlur: 10
+                    }
+                }
+            };
+            baseSeries.push(serie);
+        });
+
+        //2.根据DATA的size生成dataOption中用到的series
+        let dataSeries=[];
+        DATA.map((d,i)=>{
+            let serie={
+                name: Histogram_SERIES_NAMES[i],
+                data:d
+            };
+            dataSeries.push(serie);
+        });
 
         // 指定图表的配置项和数据
         const baseOption = {
             title: {
-                text: TITLE,
+                text: Histogram_TITLE,
                 x: 'center',
                 subtext: SUB_TITLE,
                 subtextStyle: {
@@ -35,7 +68,7 @@ export default class Histogram extends React.Component {
             },
             tooltip: {
                 trigger: 'item',
-                formatter: TOOL_TIP_FORMATTER,
+                formatter: Histogram_TOOL_TIP_FORMATTER,
             },
             toolbox: {
                 left: '10%',
@@ -57,14 +90,14 @@ export default class Histogram extends React.Component {
             dataZoom: [
                 {
                     type: 'slider',
-                    start: 0,
-                    end: 55,
+                    start: 40,
+                    end: 100,
                 }
 
             ],
             legend: {
                 show: true,
-                data: SERIES_NAME,
+                data: Histogram_SERIES_NAMES,
                 right: 0,
                 selected: {},
                 selectedMode: 'single'
@@ -78,7 +111,7 @@ export default class Histogram extends React.Component {
                 show: true,
             },
             xAxis: {
-                name: X_AXIS_TITLE,
+                name: Histogram_X_AXIS_TITLE,
                 nameLocation: 'middle',
                 nameGap: 25,
                 nameTextStyle: {
@@ -102,7 +135,7 @@ export default class Histogram extends React.Component {
                 }
             },
             yAxis: {
-                name: Y_AXIS_TITLE,
+                name: Histogram_Y_AXIS_TITLE,
                 nameLocation: 'end',
                 nameGap: 5,
                 nameTextStyle: {
@@ -118,50 +151,7 @@ export default class Histogram extends React.Component {
                     show: false
                 }
             },
-            series: [
-                {
-                    name: SERIES_NAME[0],
-                    type: 'bar',
-                    data: [],
-                    barMinHeight: 2,
-                    barMaxWidth:30,
-                    itemStyle: {
-                        normal: {
-                            color: 'rgba(17, 168,171, 1)',
-                            shadowColor: 'rgba(0, 0, 0, 0.1)',
-                            shadowBlur: 10
-                        }
-                    }
-                },
-                {
-                    name: SERIES_NAME[1],
-                    type: 'bar',
-                    data: [],
-                    barMinHeight: 2,
-                    barMaxWidth:30,
-                    itemStyle: {
-                        normal: {
-                            color: '#FF1493',
-                            shadowColor: 'rgba(0, 0, 0, 0.1)',
-                            shadowBlur: 10
-                        }
-                    }
-                },
-                {
-                    name: SERIES_NAME[2],
-                    type: 'bar',
-                    data: [],
-                    barMinHeight: 2,
-                    barMaxWidth:30,
-                    itemStyle: {
-                        normal: {
-                            color: '#800080',
-                            shadowColor: 'rgba(0, 0, 0, 0.1)',
-                            shadowBlur: 10
-                        }
-                    }
-                },
-            ],
+            series: baseSeries,
         };
         const dataOption = {
             title: {
@@ -170,17 +160,7 @@ export default class Histogram extends React.Component {
             xAxis: {
                 data: X_AXIS_ARRAY,
             },
-            series: [{
-                name: SERIES_NAME[0],
-                data: DATA_TOTAL
-            }, {
-                name: SERIES_NAME[1],
-                data: DATA_ONE
-            }, {
-                name: SERIES_NAME[2],
-                data: DATA_TWO
-            }
-            ]
+            series: dataSeries
         };
 
         console.log('dataOption:');

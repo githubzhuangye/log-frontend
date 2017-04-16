@@ -1,5 +1,5 @@
 import React from 'react';
-import MyEcharts from './MyEcharts.jsx'
+import MyEcharts from './Echarts.jsx'
 
 
 /**
@@ -25,19 +25,14 @@ export default class Gauge extends React.Component {
 
         const baseOption = {
             tooltip : {
-            },
-            toolbox: {
-                feature: {
-                    // restore: {},
-                    // saveAsImage: {}
-                }
+                formatter: "{a} <br/>{b} : {c}"
             },
             series: [
                 {
                     name:'one',
                     type: 'gauge',
-                    detail: {formatter:'{value}%'},
-                    data: []
+                    detail: {formatter:'{value}'},
+                    data: [],
                 }
             ]
         };

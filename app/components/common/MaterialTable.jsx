@@ -26,8 +26,8 @@ import {
 
  let pager = <MaterialPager pageSize={pageSize} totalCount={totalCount} currentNumber={this.state.currentNumber} active={this.clickPager}/>
 
- <MaterialTable topTitle={topTitle} titleNames={titleNames} data={TABLE_PAGE_DATA}
- fieldAttributes={fieldAttributes} pagerComponent={pager}
+ <MaterialTable TABLE_TOPTITLE={TABLE_TOPTITLE} TABLE_TITLES={TABLE_TITLES} data={TABLE_PAGE_DATA}
+ TABLE_FIELDS={TABLE_FIELDS} pagerComponent={pager}
  rowTailComponents={[
                                      <RaisedButton label="查看详情" primary={true} action={(row)=>console.log(row)}  />
                                ]}

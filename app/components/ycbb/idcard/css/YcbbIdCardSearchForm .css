@@ -1,0 +1,11 @@
+.root{
+    position: relative;
+}
+.inlineField{
+    display: inline-block;
+    margin-right: 2rem;
+}
+.loading{
+    display: inline-block;
+    position: relative;
+}

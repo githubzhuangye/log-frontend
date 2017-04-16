@@ -23,7 +23,7 @@ const reduxComposableFetch = store => next => action => {
     const [LOADING, SUCCESS, ERROR]=action.types;
     next({
         type: LOADING,
-        loading: true,
+        loading: 'loading',
         ...action
     });
 
@@ -47,7 +47,7 @@ const reduxComposableFetch = store => next => action => {
         .then(result => {
             next({
                 type: SUCCESS,
-                loading: false,
+                loading: 'hide',
                 payload: result.data,
                 params: action.params   //请求成功会附带上参数
             });
@@ -55,7 +55,7 @@ const reduxComposableFetch = store => next => action => {
         .catch(err => {
             next({
                 type: ERROR,
-                loading: false,
+                loading: 'hide',
                 payload: err,
                 params: action.params    //请求失败会附带上参数
             });

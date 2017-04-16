@@ -26,19 +26,20 @@ class TabBar extends React.Component {
     render() {
         return (
             <Tabs  className={styles.root} value={this.state.value} onChange={this.handleChange}   >
-                <Tab    label="身份证查询服务" value="a"   onActive={()=>push('/shfhsc/sfzcx')} >
-                    <div>
 
-                    </div>
-                </Tab>
-                <Tab   label="银行卡查询服务" value="b" onActive={()=>push('/shfhsc/yhqcx')} >
+                <Tab    label="身份证认证" value="a"  onActive={()=>{this.props.dispatch(push('/log-frontend/rzbb/ycbb/idcard'));}}  >
                     <div>
                     </div>
                 </Tab>
-                <Tab label="商户查询服务"   value="c"  onActive={()=>{push('/shfhsc/shcx');alert();}} >
+                <Tab   label="银行卡认证" value="b"  onActive={()=>{this.props.dispatch(push('/log-frontend/rzbb/ycbb/bankcard'));}}>
                     <div>
                     </div>
                 </Tab>
+                <Tab label="运营商认证"   value="c"   onActive={()=>{this.props.dispatch(push('/log-frontend/rzbb/ycbb/member'));}}>
+                    <div>
+                    </div>
+                </Tab>
+
             </Tabs>
 
         );

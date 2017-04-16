@@ -43,7 +43,7 @@ redux组件包含以下内容:
 	|	├	├──css
 	|	├	└──redux
 	|   └──common				不归属于任何view的组件,如一些公共组件
-	|		├──Table.jsx
+	|		├──BankCardTable.jsx
 	|		├──Table.css
 	|		└──TableRedux.js
 	├──containers

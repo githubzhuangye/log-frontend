@@ -1,18 +1,20 @@
 import React from "react";
 import {Router, Route, IndexRoute} from "react-router";
 import App from "../App.jsx";
-import One from "../views/One.jsx";
-import OneDetail from "../views/OneDetail.jsx";
 
 import Jrgc from "../views/Jrgc.jsx";
 
-import Shfhsc from "../views/Shfhsc.jsx";
-import ShfhscSfzcx from "../components/shfhsc/sfzcx/SfzcxContent.jsx";
-import Shcx from "../components/shfhsc/shcx/ShcxContent.jsx";
-import Yhqcx from "../components/shfhsc/yhqcx/YhqcxContent.jsx";
+//时长报表
+import Scbb from "../views/Scbb.jsx";
+import ScbbIdcard from "../components/scbb/idcard/Main.jsx";
+import ScbbBankcard from '../components/scbb/bankcard/Main.jsx';
+import ScbbMember from '../components/scbb/member/Main.jsx';
 
+//异常报表
 import Ycbb from "../views/Ycbb.jsx";
-import YcbbSfzcx from "../components/ycbb/sfzcx/YcbbIdCardContent.jsx"
+import YcbbIdCard from "../components/ycbb/idcard/Main.jsx"
+import YcbbBankCard from "../components/ycbb/bankcard/Main.jsx"
+import YcbbMember from "../components/ycbb/member/Main.jsx"
 
 
 export default class RootRouter extends React.Component {
@@ -28,21 +30,21 @@ export default class RootRouter extends React.Component {
                     {/*  日志报表  */}
                     <Route path="rzbb" >
                         {/*  商户返回时长报表  */}
-                        <Route path="shfhsc" component={Shfhsc}>
-                            <Route path="sfzcx" component={ShfhscSfzcx}/>
-                            <Route path="shcx" component={Shcx}/>
-                            <Route path="yhqcx" component={Yhqcx}/>
+                        <Route path="scbb" component={Scbb}>
+                            <Route path="idcard" component={ScbbIdcard}/>
+                            <Route path="bankcard" component={ScbbBankcard}/>
+                            <Route path="member" component={ScbbMember}/>
                         </Route>
                         {/*  异常报表  */}
                         <Route path="ycbb" component={Ycbb}>
-                            <Route path="sfzcx" component={YcbbSfzcx}/>
-                            <Route path="shcx" component={Shcx}/>
-                            <Route path="yhqcx" component={Yhqcx}/>
+                            <Route path="idcard" component={YcbbIdCard}/>
+                            <Route path="bankcard" component={YcbbBankCard}/>
+                            <Route path="member" component={YcbbMember}/>
                         </Route>
                     </Route>
                     {/*  系统设置  */}
-                    <Route path="xtsz" component={One}>
-                        <Route path="yhgl" component={OneDetail}/>
+                    <Route path="xtsz" component={Ycbb}>
+                        {/*<Route path="yhgl" component={YcbbSfzcx}/>*/}
                     </Route>
                 </Route>
             </Router>

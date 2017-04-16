@@ -18,8 +18,14 @@ export const LevelToStr={
     11:'>6000',
 }
 
-//产品与数字的转换
-export const ProductToStr={
+//身份证的产品
+export const IdCardProductToStr={
+    '0.0':'默认产品',
     '1.0':'身份证返照片',
     '2.0':'身份证不返照片'
+};
+
+//银行卡的产品
+export const BankCardProductToStr={
+    '0.0':'默认产品',
 }
