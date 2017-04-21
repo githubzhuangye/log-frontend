@@ -12,22 +12,16 @@ import {
 /**
  * Material-ui风格的表格组件,在每行提供按钮组
  *
- * 在Material-ui的表格组件基础上再度封装
- *
  * 1.可以选择装载分页插件
- * 2.可以选择装载右侧的按钮
+ * 2.可以选择装载右侧的按钮,一个按钮占用一个格子
  *
  * 组装的按钮必须提供action属性
- active:React.PropTypes.func.isRequired,//钩子function,必须要有一个参数i,如action={(i)=>console.log(i)}
+ active:React.PropTypes.func.isRequired,//钩子function,必须要有一个参数i,如action={(row)=>console.log(row)} ,默认传入的参数row表示该行的数据
 
- 默认传入的参数row表示该行的数据
-
- 带按钮的示例:
-
+示例:
  let pager = <MaterialPager pageSize={pageSize} totalCount={totalCount} currentNumber={this.state.currentNumber} active={this.clickPager}/>
-
- <MaterialTable TABLE_TOPTITLE={TABLE_TOPTITLE} TABLE_TITLES={TABLE_TITLES} data={TABLE_PAGE_DATA}
- TABLE_FIELDS={TABLE_FIELDS} pagerComponent={pager}
+ <MaterialTable topTitle={topTitle} titleNames={titleNames} data={TABLE_PAGE_DATA}
+ fieldAttributes={fieldAttributes} pagerComponent={pager}
  rowTailComponents={[
                                      <RaisedButton label="查看详情" primary={true} action={(row)=>console.log(row)}  />
                                ]}
@@ -84,17 +78,17 @@ export default class MaterialTable extends React.Component {
                                         })
                                     }
                                     {rowTailComponents ?
-                                        <TableRowColumn key={i + 'i'}>
-                                            {
-                                                rowTailComponents.map((r, k) => {
-                                                        return (
+                                        [
+                                            rowTailComponents.map((r, k) => {
+                                                    return (
+                                                        <TableRowColumn key={i + 'i'+k}>
                                                             <span key={i + '' + k}
                                                                   onClick={r.props.action.bind(this, d)}>{r}</span>
-                                                        )
-                                                    }
-                                                )
-                                            }
-                                        </TableRowColumn>
+                                                        </TableRowColumn>
+                                                    )
+                                                }
+                                            )
+                                        ]
                                         : ''
                                     }
                                 </TableRow>

@@ -27,15 +27,14 @@ const reduxComposableFetch = store => next => action => {
         ...action
     });
 
-    console.log('url:' + action.url);
-//
-    //headers: {'Access-Control-Allow-Origin':'http://127.0.0.1:8080/log-statiscs','Accept': 'application/json', 'Content-Type': 'application/json' },
-    let myHeaders = {
-        // 'Accept': 'application/json',
-        'Access-Control-Allow-Origin':'http:127.0.0.1:8080/log-statiscs',
-        'Content-Type': 'application/json',
-    };
-    fetch(action.url, {method: 'POST', body: JSON.stringify(action.params), mode: 'cors'})
+    console.log('请求url:  ' + action.url);
+
+    fetch(action.url, {
+        method: 'POST',
+        headers: {'Accept': 'application/json', 'Content-Type': 'application/json',},
+        body: JSON.stringify(action.params),
+        mode: 'cors'
+    })
         .then((res) => {
             if (res.status != 200) {
                 console.log('Looks like there was a problem. Status Code: ' + res.status);
@@ -49,6 +48,7 @@ const reduxComposableFetch = store => next => action => {
                 type: SUCCESS,
                 loading: 'hide',
                 payload: result.data,
+                result: result,//获取的结果
                 params: action.params   //请求成功会附带上参数
             });
         })
@@ -60,7 +60,6 @@ const reduxComposableFetch = store => next => action => {
                 params: action.params    //请求失败会附带上参数
             });
         });
-
 }
 
 export default reduxComposableFetch;

@@ -31,7 +31,7 @@ export function countPageNum(length,pageSize){
 }
 
 /**
- * 获取分页数据
+ * 获取分页数据,用于前端分页
  * @param data
  * @param currentNum
  */

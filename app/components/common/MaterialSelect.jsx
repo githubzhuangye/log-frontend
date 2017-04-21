@@ -12,14 +12,12 @@ export default class MaterialSelect extends React.Component {
         keys: React.PropTypes.array.isRequired,//keys的列表
         values: React.PropTypes.array.isRequired,//值的列表
         label:React.PropTypes.string.isRequired,  //标签
-        value:React.PropTypes.any.isRequired,
-        onChange:React.PropTypes.func
     };
 
     render() {
         const {keys, values,label,value,onChange}=this.props;
         return (
-            <SelectField  floatingLabelText={label} value={value} onChange={onChange} maxHeight={200}>
+            <SelectField {...this.props} floatingLabelText={label}  maxHeight={400}>
                 <MenuItem value={''} primaryText=""/>
                 {
                     keys.map((key, i) => {
