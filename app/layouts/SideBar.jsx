@@ -58,39 +58,39 @@ export default class SideBar extends React.Component{
         return (
             <SelectableList defaultValue={1}>
                 <Subheader>监控系统</Subheader>
-                <ListItem value={1} primaryText="今日观察" containerElement={<Link to="/log-frontend/jrgc" />}   leftIcon={<Apps />} />
-                <ListItem value={2} primaryText="实时监控"  leftIcon={<ContentDrafts /> }
+                <ListItem value={1} primaryText="今日观察" containerElement={<Link to="/log-frontend/jrgc" />}    />
+                <ListItem value={2} primaryText="实时监控"
                           nestedItems={[
-                              <ListItem value={21} primaryText="异常监控"   leftIcon={<ContentInbox   /> }             />,
-                              <ListItem value={22} primaryText="超时监控"   leftIcon={<ContentInbox   /> }             />,
+                              <ListItem value={21} primaryText="异常监控" />,
+                              <ListItem value={22} primaryText="超时监控" />,
                           ]}
                 />
-                <ListItem value={3} primaryText="日志报表"  containerElement={<Link to="/log-frontend/rzbb/scbb/idcard" />} leftIcon={<ContentSend />  } initiallyOpen={true}
+                <ListItem value={3} primaryText="日志报表"  containerElement={<Link to="/log-frontend/rzbb/scbb/idcard" />} initiallyOpen={true}
                           nestedItems={[
-                              <ListItem value={31} primaryText="时长报表"   leftIcon={<ContentInbox   /> }  containerElement={<Link to="/log-frontend/rzbb/scbb/idcard" />}            />,
-                              <ListItem value={32} primaryText="异常报表"   leftIcon={<ContentInbox   /> }  containerElement={<Link to="/log-frontend/rzbb/ycbb/idcard" />}            />,
+                              <ListItem value={31} primaryText="时长报表"  containerElement={<Link to="/log-frontend/rzbb/scbb/idcard" />}            />,
+                              <ListItem value={32} primaryText="异常报表"  containerElement={<Link to="/log-frontend/rzbb/ycbb/idcard" />}            />,
                           ]}
                 />
-                <ListItem value={4} primaryText="预警系统"  leftIcon={<ActionGrade /> }   initiallyOpen={true}
+                <ListItem value={4} primaryText="预警系统"    initiallyOpen={true}
                           nestedItems={[
-                              <ListItem value={41} primaryText="异常预警"   leftIcon={<ContentInbox /> } containerElement={<Link to="/log-frontend" />} />,
-                              <ListItem value={42} primaryText="业务预警"   leftIcon={<ContentInbox /> } />,
-                              <ListItem value={43} primaryText="预警设置"   leftIcon={<ContentInbox /> } />,
+                              <ListItem value={41} primaryText="异常预警"   />,
+                              <ListItem value={42} primaryText="业务预警"  />,
+                              <ListItem value={43} primaryText="预警设置"  containerElement={<Link to="/log-frontend/yjsz/channel" />}   />,
                           ]}
                 />
-                <ListItem value={5} primaryText="服务器监控"   leftIcon={<ContentDrafts />}    initiallyOpen={true}
+                <ListItem value={5} primaryText="服务器监控" initiallyOpen={false}
                           nestedItems={[
-                              <ListItem value={51} primaryText="redis缓存监控"   leftIcon={<ContentInbox /> }  />,
-                              <ListItem value={52} primaryText="Mongodb集合监控"   leftIcon={<ContentInbox  /> }/>,
-                              <ListItem value={53} primaryText="MySql日志监控"   leftIcon={<ContentInbox  /> } />,
+                              <ListItem value={51} primaryText="redis缓存监控"  />,
+                              <ListItem value={52} primaryText="Mongodb集合监控"/>,
+                              <ListItem value={53} primaryText="MySql日志监控"  />,
                           ]}
                 />
-                <ListItem value={5} primaryText="系统设置"   leftIcon={<ContentDrafts />}    initiallyOpen={true}
+                <ListItem value={6} primaryText="系统设置"  initiallyOpen={true}
                           nestedItems={[
-                              <ListItem value={51} primaryText="用户管理"   leftIcon={<ContentInbox /> } containerElement={<Link to="/log-frontend/xtsz/yhgl" />}   />,
+                              <ListItem value={51} primaryText="用户管理"  containerElement={<Link to="/log-frontend/yhgl/user" />}   />,
                           ]}
                 />
-                <ListItem value={6} primaryText="意见反馈" leftIcon={<Book />}  />
+                <ListItem value={7} primaryText="意见反馈" />
             </SelectableList>
         );
     }

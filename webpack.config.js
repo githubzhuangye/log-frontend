@@ -3,9 +3,11 @@ var config = {
     output: {
         path: './',
         filename: 'bundle.js',
+        publicPath:'/'
     },
     devServer: {
         port: 7777,
+        historyApiFallback:true
         //添加反向代理的调试
 /*        proxy: {
             '/idcard/!*': {

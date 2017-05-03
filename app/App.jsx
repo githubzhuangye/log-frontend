@@ -4,13 +4,17 @@ import SideBar from './layouts/SideBar.jsx'
 
 import styles from './App.css'
 
+import Global from './components/global/Global.jsx'
+
 export default class App extends React.Component {
     render() {
         return (
             <div>
+                {/*  加载全局的一些组件  */}
+                <Global/>
                 <HeaderBar/>
-                <div className={styles.bottom}>
-                    <div className={styles.left}  >
+                <div className={styles.layout}>
+                    <div className={styles.left} >
                         <SideBar/>
                     </div>
                     <div className={styles.right}>

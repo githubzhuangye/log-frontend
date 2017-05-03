@@ -31,7 +31,7 @@ const reduxComposableFetch = store => next => action => {
 
     fetch(action.url, {
         method: 'POST',
-        headers: {'Accept': 'application/json', 'Content-Type': 'application/json',},
+        headers: {'Accept': 'application/json', 'Content-Type': 'application/json',},//jetty容器设置跨域后仍然不能使用headers访问,但是tomcat可以带headers访问
         body: JSON.stringify(action.params),
         mode: 'cors'
     })
@@ -47,8 +47,9 @@ const reduxComposableFetch = store => next => action => {
             next({
                 type: SUCCESS,
                 loading: 'hide',
-                payload: result.data,
                 result: result,//获取的结果
+                payload: result.data,
+                success: result.success,
                 params: action.params   //请求成功会附带上参数
             });
         })

@@ -2,6 +2,9 @@ import {combineReducers} from 'redux'
 import {routerReducer} from 'react-router-redux'
 import {reducer as form} from 'redux-form'
 
+//全局数据,比如用户数据,放在这里
+import global_redux from '../components/global/redux/Redux'
+
 //今日观察
 import jrgc_redux from '../components/jrgc/redux/Redux'
 
@@ -17,10 +20,21 @@ import ycbb_idcard_redux from '../components/ycbb/idcard/redux/Redux'
 //异常报表|银行卡
 import ycbb_bankcard_redux from '../components/ycbb/bankcard/redux/Redux'
 
+//预警设置
+import yjsz_channel_redux from '../components/yjsz/channel/redux/Redux'
+
+import yjsz_exception_redux from '../components/yjsz/exception/redux/Redux'
+
+//用户管理
+import yhgl_user_redux from '../components/yhgl/user/redux/Redux'
 
 const rootReducer = combineReducers({
     routing: routerReducer,
     form,
+
+    //全局数据
+    global_redux,
+
     //今日观察
     jrgc_redux,
 
@@ -34,7 +48,18 @@ const rootReducer = combineReducers({
     ycbb_idcard_redux,
 
     //异常报表|银行卡
-    ycbb_bankcard_redux
+    ycbb_bankcard_redux,
+
+    //预警设置
+    //渠道预警设置
+    yjsz_channel_redux,
+    //异常预警设置
+    yjsz_exception_redux,
+
+    //用户管理
+    yhgl_user_redux,
+
+
 });
 
 export default rootReducer;

@@ -4,16 +4,13 @@
  */
 
 //所有URL前缀,测试环境
-// export const URL_PREFIX='http://127.0.0.1:8080/log-statiscs';
+export const URL_PREFIX='http://127.0.0.1:8080/log-statiscs';
 
 //所有URL前缀,付刚_测试环境
 // export const URL_PREFIX='http://10.0.70.248:8080/log-statiscs';
 
 //所有URL前缀,生产环境
-export const URL_PREFIX='http://192.168.31.45:21102/log-statiscs';
-
-
-
+// export const URL_PREFIX='http://192.168.31.45:21102/log-statiscs';
 
 
 
@@ -47,3 +44,33 @@ export const URL_YCBB_BANKCARD_EXCEPTCONTENTS='/bankcarderror/exceptionPhrases.d
 //------------------------------今日头条-----------------------------------------------
 export const URL_JRTT='/important/getTopImportantMessage.do';
 export const URL_LEFT_GAUGE='/idcarderror/countNowErrors.do';//身份证项目异常数
+
+
+//------------------------------预警设置-----------------------------------------------
+
+//通用
+export const URL_YJSZ_AUTO_WARNING_WAYS='/ruleInfo/warningWays.do'
+export const URL_YJSZ_AUTO_RULE_TYPE='/ruleInfo/ruleTypes.do';
+export const URL_YJSZ_AUTO_ELEMENTS='/ruleInfo/elements.do'
+export const URL_YJSZ_AUTO_PRODUCT_STATUS='/ruleInfo/productStatus.do'
+export const URL_YJSZ_AUTO_WARNING_LEVELS='/ruleInfo/warningLevels.do'
+export const URL_YJSZ_AUTO_CONDITION_TYPES='/ruleInfo/conditionTypes.do'
+
+//通道预警
+export const URL_YJSZ_CHANNEL_PAGE='/ruleInfo/listRuleInfo.do'
+export const URL_YJSZ_CHANNEL_UPDATE='/ruleInfo/updateRuleInfo.do'
+export const URL_YJSZ_CHANNEL_DELETE='/ruleInfo/deleteRuleInfo.do'
+export const URL_YJSZ_CHANNEL_INSERT='/ruleInfo/insertRuleInfo.do'
+
+//------------------------------用户管理-----------------------------------------------
+
+//用户管理
+export const URL_YHGL_USER_PAGE='/userInfo/listUserInfo.do'
+export const URL_YHGL_USER_UPDATE='/userInfo/updateUserInfo.do'
+export const URL_YHGL_USER_DELETE='/userInfo/deleteUserInfo.do'
+export const URL_YHGL_USER_INSERT='/userInfo/insertUserInfo.do'
+
+//登陆
+export const URL_YHGL_USER_LOGIN='/userInfo/login.do'
+//修改密码
+export const URL_YHGL_USER_SETPWD='/userInfo/setpwd.do'
