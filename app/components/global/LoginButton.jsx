@@ -55,7 +55,7 @@ class LoginButton extends React.Component {
         const {userInfo}=this.props;
         return (
             userInfo && userInfo.id && userInfo.name ?
-                <span><span>欢迎, {userInfo.name}</span>
+                <span><span style={{fontSize:'18px',color:'rgb(255, 255, 255)'}}>欢迎, {userInfo.name}</span>
                     <IconMenu  iconButtonElement={ <IconButton><MoreVertIcon /></IconButton> }
                               targetOrigin={{horizontal: 'right', vertical: 'top'}}
                               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -65,7 +65,7 @@ class LoginButton extends React.Component {
                     </IconMenu>
                 </span>
                 :
-                <FlatButton label="登录" onClick={this.openLoginDialog.bind(this)}/>
+                <FlatButton labelStyle={{fontSize:'18px',color:'rgb(255, 255, 255)'}} label="登录" onClick={this.openLoginDialog.bind(this)}/>
         );
     }
 }

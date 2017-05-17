@@ -4,16 +4,16 @@ import MyEcharts from './Echarts.jsx'
 
 
 /**
- * 自定义柱状图组件,默认有3个视图
+ * 自定义柱状图组件
  * 在MyEcharts基础上再度封装
  * 用户只需给定baseOptionSet和dataOptionSet
  */
 export default class Histogram extends React.Component {
 
     static propTypes = {
-        baseOptionSet: React.PropTypes.object.isRequired,//定制的参数项
-        dataOptionSet: React.PropTypes.object.isRequired,//需要变化的数据
-        containerId: React.PropTypes.string.isRequired,//容器的ID
+        baseOptionSet: React.PropTypes.object.isRequired,//定制的参数项,数据结构:{  Histogram_TITLE,Histogram_X_AXIS_TITLE,Histogram_Y_AXIS_TITLE,Histogram_SERIES_NAMES,Histogram_TOOL_TIP_FORMATTER     }
+        dataOptionSet: React.PropTypes.object.isRequired,//需要变化的数据,数据结构:{DATA,SUB_TITLE, X_AXIS_ARRAY,}  ,DATA是一个数组,和Histogram_SERIES_NAMES是一一相对的数组
+        containerId: React.PropTypes.string.isRequired,//容器的ID,必须,且是全局唯一
         width: React.PropTypes.string.isRequired,//容器的宽度
         height: React.PropTypes.string.isRequired,//容器的高度
     };

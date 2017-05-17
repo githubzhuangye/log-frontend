@@ -10,12 +10,12 @@ import {getLastMonth, dateToString}  from '../../../../utils/DateUtils'
 
 //1.其他静态字段
 //1.1扇形图所用到的常量
-export const FanChart_TITLE = '身份证查询访问时长总百分比';
+export const FanChart_TITLE = '访问时长总百分比';
 export const FanChart_TOOL_TIP_FORMATTER = "{a} <br/>在{b}之间 共 {c}笔 <br/>占比: {d}%";
 export const FanChart_LEGEND_DATA = ['0-200', '200-400', '400-600', '600-800', '800-1000', '1000-1300', '1300-1500', '1500-2000', '2000-4000', '4000-6000', '>6000'];
 
 //1.2柱状图所用到的常量
-export const Histogram_TITLE = '身份证查询每日访问量';
+export const Histogram_TITLE = '每日访问量';
 export const Histogram_X_AXIS_TITLE = '日期';
 export const Histogram_Y_AXIS_TITLE = '访问量';
 export const Histogram_TOOL_TIP_FORMATTER = "在{b} 共 访问<span style='color:deeppink'>{c}</span>次";

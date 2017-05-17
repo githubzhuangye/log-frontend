@@ -56,8 +56,8 @@ class RootRouter extends React.Component {
     //需要管理员级别的验证
     authManager({params}, replace){
         if(!this.props.userInfo || ! this.props.userInfo.name || !this.props.userInfo.roleInfo || !this.props.userInfo.roleInfo.roleName){
-            this.props.openSnack('请先登录再访问')
-            replace(`/log-frontend`)
+            this.props.openSnack('请先登录再访问');
+            replace(this.props.path)
             return;
         }
         if(this.props.userInfo.roleInfo.roleName == '管理员' ){
@@ -66,7 +66,7 @@ class RootRouter extends React.Component {
             return
         }else{
             this.props.openSnack('您的账号不是管理员以上级别')
-            replace(`/log-frontend`)
+            replace(this.props.path)
             return;
         }
     }
@@ -95,8 +95,8 @@ class RootRouter extends React.Component {
                             <Route path="member" component={YcbbMember}/>
                         </Route>
                     </Route>
-                    {/*  预警设置  */}
-                    <Route path="yjsz" component={Yjsz} onEnter={this.authManager}>
+                    {/*  预警设置 */}
+                    <Route path="yjsz" component={Yjsz} onEnter={this.authManager}   >
                         {/*  通道预警  */}
                         <Route path="channel" component={YjszChannel}>
                             <Route path="dialog" component={YjszChannelDialog}/>
@@ -132,7 +132,8 @@ class RootRouter extends React.Component {
 
 export default connect (
     (state,ownProps)=>({
-        userInfo: state.global_redux.userInfo
+        userInfo: state.global_redux.userInfo,
+        path:state.routing.locationBeforeTransitions.pathname
     }),
     (dispatch, ownProps) => ({
         openSnack: (message) => dispatch({type: ACTION_SNACK_OPEN,message})

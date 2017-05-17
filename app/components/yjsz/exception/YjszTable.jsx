@@ -69,7 +69,13 @@ import {
    getRowAndDataByNum
 }from './redux/Redux'
 
+import {
+    getNameFromEnumByValue,
+}from '../../../consts/Enums'
 
+import {
+    ServerNameEnum
+}from '../../../consts/Enums'
 /**
  * 身份证查询的表格
  */
@@ -195,7 +201,7 @@ class YjszTable extends React.Component {
         const TABLE_STYLES = [
             {
                 field: 'timeSlot',
-                style: (value) => value == 1 ? {color: 'red',} : {}
+                style: (value) => value == 999 ? {color: 'red',} : {}
             },
             {
                 field: 'level',
@@ -216,7 +222,11 @@ class YjszTable extends React.Component {
             {
                 field:'level',
                 enum:autoWarningLevels
-            }
+            },
+            {
+                field:'serverName',
+                enum:ServerNameEnum
+            },
         ]
 
         //字段格式化器
@@ -229,6 +239,14 @@ class YjszTable extends React.Component {
                 field: 'timeSlot',
                 format: (rv,fv,dataObj) => fv + '小时'
             },
+            {
+                field: 'exceptionType',
+                format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
+            },
+            {
+                field: 'exceptionContent',
+                format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
+            },
         ];
 
         //字段组件器
@@ -237,7 +255,7 @@ class YjszTable extends React.Component {
                field:'noticeMethods',
                component:(value,formatValue,context)=> (
                    value && value.map((v,i)=>
-                       <Chip   onClick={()=>{console.log(v);}} key={i}>{v}</Chip>
+                       <Chip   onClick={()=>{console.log(v);}} key={i}>{ getNameFromEnumByValue(autoWarningWays, v) }</Chip>
                    ))
            },
            {

@@ -11,7 +11,7 @@ export default class Main extends React.Component {
     render() {
         return (
             <div>
-                <GaugeBar/>
+                {/*<GaugeBar/>*/}
                 <ImportantInfoList/>
             </div>
         );

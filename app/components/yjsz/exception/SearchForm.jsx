@@ -25,6 +25,9 @@ import {
 }from 'redux-form-material-ui'
 
 import {
+    ServerNameEnum
+}from '../../../consts/Enums'
+import {
     URL_PREFIX,
     URL_YJSZ_CHANNEL_PAGE,
 
@@ -227,10 +230,9 @@ class SearchForm extends React.Component {
             <div className={styles.root}>
                 <form className={styles.form} onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
                     <div>
-                        <Field name="exceptionType" component={renderInput} type="text" label="异常类型" style={{'width': '10rem'}}/>
-                        <Field name="exceptionContent" component={renderInput} type="text" label="异常名称" style={{'width': '10rem'}}/>
-                        <Field name="productName" component={renderInput} type="text" label="产品名称" style={{'width': '10rem'}}/>
-                        <FieldSelect name="productStatus" floatingLabelText="产品状态" options={auto.autoProductStatus} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
+                        <Field name={'exceptionType'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={auto.autoExceptionType} floatingLabelText ={'异常类型'} floatingLabelFixed={true}  style={{'marginRight': '2rem','width':'10rem'}} textFieldStyle={{'width':'10rem'}} fullWidth={false}  menuProps={{maxHeight:300}}  />
+                        <Field name={'exceptionContent'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={auto.autoExceptionContent}  floatingLabelText={'异常名称'} floatingLabelFixed={true}  style={{'marginRight': '2rem','width':'10rem'}} textFieldStyle={{'width':'10rem'}}  fullWidth={false} menuProps={{maxHeight:300}}  />
+                        <FieldSelect name="serverName" floatingLabelText="服务器名称" options={ServerNameEnum} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
                         <span>
                             <RaisedButton label="重置" primary={true} disabled={pristine || submitting} style={{margin: 12}} onClick={reset}/>
                             <RaisedButton type="submit" label={'查询'} primary={true} disabled={submitting}/>
@@ -244,13 +246,12 @@ class SearchForm extends React.Component {
                         <FieldSelect name="rule" floatingLabelText="预警规则" options={auto.autoRuleTypes} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
                         <Field name="timeSlot" component={renderInput} type="text" label="时间段" style={{'width': '10rem'}}/>
                     </div>
-
-                    <div className={styles.right} style={{'top': '2.2rem'}}>
-                        <RaisedButton label="添加" primary={true} style={{margin: 12}} onClick={this.openAddDialog}/>
-                        <RaisedButton label="修改" primary={true} style={{margin: 12}} onClick={this.openUpdateDialog}/>,
-                        <RaisedButton label="删除" secondary={true} onClick={this.openDeleteWindow}/>,
-                    </div>
                 </form>
+                <div style={{'marginTop': '1rem','textAlign':'right'}}>
+                    <RaisedButton label="添加" primary={true} style={{margin: 12}} onClick={this.openAddDialog}/>
+                    <RaisedButton label="修改" primary={true} style={{margin: 12}} onClick={this.openUpdateDialog}/>,
+                    <RaisedButton label="删除" secondary={true} onClick={this.openDeleteWindow}/>,
+                </div>
 
             </div>
         );

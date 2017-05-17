@@ -2,17 +2,17 @@ import React from 'react';
 //1.其他静态字段
 //表格字段
 //字段中文名
-export const TABLE_TITLES = ['ID', '异常类型', '异常内容', '产品名称',  '时间段', '要素', '条件',  '阀值','关系', '预警方式', '级别',  '连接'];
+export const TABLE_TITLES = ['ID', '异常类型', '异常内容', '服务器名称',  '时间段', '要素', '条件',  '阀值','关系', '预警方式', '级别',  '连接'];
 //字段名
-export const TABLE_FIELDS = ['ruleId', 'exceptionType', 'exceptionContent', 'product',  'timeSlot', 'element', 'condition','limValue', 'relation',  'noticeMethods', 'level'];
+export const TABLE_FIELDS = ['ruleId', 'exceptionType', 'exceptionContent', 'serverName',  'timeSlot', 'element', 'condition','limValue', 'relation',  'noticeMethods', 'level'];
 
 //表格的标题
-export const TABLE_TOPTITLE = `通道预警规则设置`;
+export const TABLE_TOPTITLE = `异常预警规则设置`;
 
 
 //属性表格的字段
-export const PROPERTIES_DISPLAY_NAMES = ['ID','规则预警类型', '异常类型', '异常内容', '产品名称',  '时间段(小时)', '要素', '条件', '关系表达式', '阀值', '预警方式','预警通知人员', '级别','触发间隔(min)','触发休眠时间(min)','创建者','创建时间','修改者','修改时期'];
-export const PROPERTIES_FIELDS = ['ruleId','ruleSetType', 'exceptionType', 'exceptionContent', 'product',  'timeSlot', 'element', 'condition', 'relation', 'limValue', 'noticeMethods','noticePersons', 'level','triggerInterval','triggerSleep','createUser','createTime','updateUser','updateTime'];
+export const PROPERTIES_DISPLAY_NAMES = ['ID','规则预警类型', '异常类型', '异常内容', '服务器名称',  '时间段(小时)', '要素', '条件', '关系表达式', '阀值', '预警方式','预警通知人员', '级别','触发间隔(min)','触发休眠时间(min)','创建者','创建时间','修改者','修改时期'];
+export const PROPERTIES_FIELDS = ['ruleId','ruleSetType', 'exceptionType', 'exceptionContent', 'serverName',  'timeSlot', 'element', 'condition', 'relation', 'limValue', 'noticeMethods','noticePersons', 'level','triggerInterval','triggerSleep','createUser','createTime','updateUser','updateTime'];
 
 //2.action静态字段
 

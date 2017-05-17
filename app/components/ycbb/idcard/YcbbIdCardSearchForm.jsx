@@ -142,20 +142,24 @@ class YcbbIdCardSearchForm extends React.Component {
             <div className={styles.root}>
                 <div className={styles.inlineField}>
                     <DatePicker ref="begin" onChange={this.handleChangeMinDate} autoOk={true} floatingLabelText="起始时间"
-                                disableYearSelection={false} container={'inline'} value={this.state.beginDate}/>
+                                disableYearSelection={false} container={'inline'} value={this.state.beginDate}
+                    style={{'width':'10rem'}} textFieldStyle={{'width':'10rem'}}
+                                />
                 </div>
                 <div className={styles.inlineField}>
                     <DatePicker ref="end" onChange={this.handleChangeMaxDate} autoOk={true} floatingLabelText="结束时间"
-                                disableYearSelection={false} container={'inline'} value={this.state.endDate}/>
+                                disableYearSelection={false} container={'inline'} value={this.state.endDate}
+                                style={{'width':'10rem'}} textFieldStyle={{'width':'10rem'}}
+                    />
                 </div>
                 <div className={styles.inlineField}>
                 <AutoComplete menuProps={{maxHeight:400}} floatingLabelText="异常类型" filter={filter} openOnFocus={true} dataSource={exceptionTypes }
-                              onUpdateInput={this.handleChangeExceptionType}
+                              onUpdateInput={this.handleChangeExceptionType} style={{'width':'10rem'}} textFieldStyle={{'width':'10rem'}}
                               searchText={this.state.exceptionType}/>
                 </div>
                 <div className={styles.inlineField}>
                 <AutoComplete menuProps={{maxHeight:400}} floatingLabelText="异常内容" filter={filter} openOnFocus={true}
-                              dataSource={exceptionContents }
+                              dataSource={exceptionContents }  style={{'width':'10rem'}} textFieldStyle={{'width':'10rem'}}
                               onUpdateInput={this.handleChangeExceptionConetent}
                               searchText={this.state.exceptionContent}/>
                 </div>

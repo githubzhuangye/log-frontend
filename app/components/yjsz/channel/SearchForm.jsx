@@ -83,6 +83,15 @@ import {
 
 } from "./redux/Redux";
 
+import {
+    AutoComplete,
+}from 'redux-form-material-ui'
+
+import {
+    ProductArray,
+    ChannelArray,
+    CounterArray
+}from '../../../consts/Enums'
 
 /*renderInput|参数效验*/
 const renderInput = ({input, label, type, meta: {touched, error, warning}}) => (
@@ -208,13 +217,15 @@ class SearchForm extends React.Component {
         //redux-form提供的props
         const {error, handleSubmit, reset, submitting, pristine}=this.props;
 
+        //AutoComplete的过滤规则
+        const filter = (searchText, key) => searchText == '' || key.indexOf(searchText) !== -1;
         return (
             <div className={styles.root}>
                 <form className={styles.form} onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
                     <div>
-                        <Field name="channel" component={renderInput} type="text" label="通道名称" style={{'width': '10rem'}}/>
-                        <Field name="counter" component={renderInput} type="text" label="柜台名称" style={{'width': '10rem'}}/>
-                        <Field name="productName" component={renderInput} type="text" label="产品名称" style={{'width': '10rem'}}/>
+                        <Field name={'channel'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={ChannelArray} floatingLabelText ={'通道名称'} floatingLabelFixed={true}  style={{'marginRight': '2rem','width':'10rem'}} textFieldStyle={{'width':'10rem'}}  fullWidth={false}  menuProps={{maxHeight:300}}  />
+                        <Field name={'counter'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={CounterArray}  floatingLabelText={'柜台名称'}  floatingLabelFixed={true}  style={{'marginRight': '2rem','width':'10rem'}} textFieldStyle={{'width':'10rem'}}  fullWidth={false}  menuProps={{maxHeight:300}} />
+                        <Field name={'product'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={ProductArray}  floatingLabelText={'产品名称'}floatingLabelFixed={true}  style={{'marginRight': '2rem','width':'10rem'}} textFieldStyle={{'width':'10rem'}}  fullWidth={false}  menuProps={{maxHeight:300}}   />
                         <FieldSelect name="productStatus" floatingLabelText="产品状态" options={this.props.autoform.autoProductStatus} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
                         <span>
                             <RaisedButton label="重置" primary={true} disabled={pristine || submitting} style={{margin: 12}} onClick={reset}/>
@@ -229,13 +240,12 @@ class SearchForm extends React.Component {
                         <FieldSelect name="rule" floatingLabelText="预警规则" options={this.props.autoform.autoRuleTypes} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
                         <Field name="timeSlot" component={renderInput} type="text" label="时间段" style={{'width': '10rem'}}/>
                     </div>
-
-                    <div className={styles.right} style={{'top': '2.2rem'}}>
-                        <RaisedButton label="添加" primary={true} style={{margin: 12}} onClick={this.openAddDialog}/>
-                        <RaisedButton label="修改" primary={true} style={{margin: 12}} onClick={this.openUpdateDialog}/>,
-                        <RaisedButton label="删除" secondary={true} onClick={this.openDeleteWindow}/>,
-                    </div>
                 </form>
+                <div style={{'marginTop': '1rem','textAlign':'right'}}>
+                    <RaisedButton label="添加" primary={true} style={{margin: 12}} onClick={this.openAddDialog}/>
+                    <RaisedButton label="修改" primary={true} style={{margin: 12}} onClick={this.openUpdateDialog}/>,
+                    <RaisedButton label="删除" secondary={true} onClick={this.openDeleteWindow}/>,
+                </div>
 
             </div>
         );

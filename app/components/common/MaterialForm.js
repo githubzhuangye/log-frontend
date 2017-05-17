@@ -34,10 +34,10 @@ import {
 
 /*renderInput|参数效验*/
 //默认是inline-block形式,添加fullWidth可以变成一行
-export const renderInput = ({input, label,  type, disabled, meta: {touched, error, warning}, ...others}) => (
-    <TextField floatingLabelText={label}  floatingLabelFixed={true} floatingLabelStyle ={{fontSize:'18px'}}
-               errorStyle={{color: 'orange'}} errorText={touched && error || warning}
-               {...input} {...others} disabled={disabled}
+export const renderInput = ({input, label,   disabled, meta: {touched, error, warning}, ...others}) => (
+    <TextField {...input}   floatingLabelFixed={true} floatingLabelStyle ={{fontSize:'18px'}}
+               errorStyle={{color: 'orange'}} errorText={touched && error || warning} disabled={disabled}
+               {...others}
     />
 )
 
@@ -78,7 +78,7 @@ export const FieldSelect = ({name, label, options, ...others}) => (
 /*  checkedValues表示当前选中的值 */
 /*  重度封装,无法定制每个选项的选择效果  */
 export const MFieldSelect = ({name,  options,checkedValues, ...others}) => (
-    <Field   {...others}   name={name} component={MSelectField}  maxHeight={300}>
+    <Field   {...others}   name={name} component={MSelectField}  maxHeight={300} floatingLabelFixed={true}  >
         {
             options.map((item, i) =>
                 <MenuItem value={item.value} key={i} primaryText={item.name} checked={checkedValues && checkedValues.includes(item.value)} insetChildren={true}/>
@@ -87,6 +87,14 @@ export const MFieldSelect = ({name,  options,checkedValues, ...others}) => (
     </Field>
 )
 
+/**
+ * 封装的Auto组件
+ * @param props
+ * @constructor
+ */
+export const FieldAuto=({...props})=>(
+    <Field component={AutoComplete} openOnFocus={true}   floatingLabelFixed={true}    menuProps={{maxHeight:300}}  />
+)
 
 
 /*  封装的单选框组  */

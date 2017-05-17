@@ -72,8 +72,8 @@ class PwdDialog extends React.Component {
                     <div style={{padding: '2.5rem 3.5rem 2.5rem 3.5rem'}}>
                         <form onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
 
-                            <Field name={'oldpwd'} component={renderInput} type="text" floatingLabelText={'原密码'} fullWidth={true} validate={V.REQUIRED} />
-                            <Field name={'onepwd'} component={renderInput} type="text" floatingLabelText={'新密码'} fullWidth={true} validate={V.REQUIRED} />
+                            <Field name={'oldpwd'} component={renderInput} type="password" floatingLabelText={'原密码'} fullWidth={true} validate={V.REQUIRED} />
+                            <Field name={'onepwd'} component={renderInput} type="password" floatingLabelText={'新密码'} fullWidth={true} validate={V.REQUIRED} />
                             <Field name={'twopwd'} component={renderInput} type="password"  floatingLabelText={'再次输入新密码'} fullWidth={true} validate={V.REQUIRED}  />
 
                             {error && <strong>{error}</strong>}

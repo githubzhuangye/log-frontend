@@ -30,6 +30,9 @@ import {
 
 }from './redux/Redux'
 
+import {
+    ServerNameEnum
+}from '../../../consts/Enums'
 /**
  * 右侧滑动条
  */
@@ -52,6 +55,10 @@ class YjszDrawer extends React.Component {
             {
                 field:'level',
                 enum:autoWarningLevels
+            },
+            {
+                field:'serverName',
+                enum:ServerNameEnum
             },
             ];
 

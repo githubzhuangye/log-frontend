@@ -85,18 +85,31 @@ import {
 class YjszDialog extends React.Component {
 
     handleSubmit(values) {
-        let params={
-            ...values,
-            ruleSetType:'通道预警',
-            ruleList:[
-                {
-                    ...values
-                }
-            ],
-        }
+        let params;
         if (this.props.dialog.title == '添加') {
+            params={
+                ...values,
+                ruleSetType:'通道预警',
+                createUser:this.props.userInfo.name,
+                updateUser:this.props.userInfo.name,
+                ruleList:[
+                    {
+                        ...values
+                    }
+                ],
+            }
             this.props.reqAdd(params);
         } else {
+            params={
+                ...values,
+                ruleSetType:'通道预警',
+                updateUser:this.props.userInfo.name,
+                ruleList:[
+                    {
+                        ...values
+                    }
+                ],
+            }
             this.props.reqUpdate(params);
         }
 
@@ -150,15 +163,15 @@ class YjszDialog extends React.Component {
 
                             <Field name={'id'} component={renderInput} style={{display:'none'}}  type="text" />
                             <Field name={'ruleId'} component={renderInput} style={{display:hide_in_addmode}} disabled={disabledAtUpdate} type="text" label={'ID'} fullWidth={true} />
-                            <Field name={'channel'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={ChannelArray} floatingLabelText ={'通道名称'} fullWidth={true}  menuProps={{maxHeight:300}}   />
-                            <Field name={'counter'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={CounterArray}  floatingLabelText={'柜台名称'} fullWidth={true} menuProps={{maxHeight:300}}   />
-                            <Field name={'product'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={ProductArray}  floatingLabelText={'产品名称'} fullWidth={true}  menuProps={{maxHeight:300}}   />
 
+                            <Field name={'channel'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={ChannelArray}  floatingLabelText={'通道名称'} floatingLabelFixed={true}  floatingLabelStyle ={{fontSize:'18px'}}  fullWidth={true} menuProps={{maxHeight:300}}  />
+                            <Field name={'counter'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={CounterArray}  floatingLabelText={'柜台名称'} floatingLabelFixed={true}  floatingLabelStyle ={{fontSize:'18px'}}  fullWidth={true} menuProps={{maxHeight:300}}  />
+                            <Field name={'product'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={ProductArray}  floatingLabelText={'产品名称'} floatingLabelFixed={true}  floatingLabelStyle ={{fontSize:'18px'}}  fullWidth={true} menuProps={{maxHeight:300}}  />
                             <FieldSelect name="timeSlot" label="时间段" options={TimeSlotEnum} fullWidth={true}  />
                             <div>
                                 <FieldSelect name="element" label="要素" options={autoform.autoElements} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}} />
                                 <FieldSelect name="condition" label="条件" options={autoform.autoConditionTypes} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
-                                <Field name={'limValue'} component={renderInput} type="text" label={'阀值'}   style={{width:'8rem'} }  />
+                                <Field name={'limValue'} component={renderInput} type="text" floatingLabelText={'阀值'}   style={{width:'8rem'} }  />
                             </div>
                             <FieldSelect name="triggerInterval" label="触发间隔时间(min),数值越小则检测的越频繁,建议选用1分钟" options={TriggerIntervalEnum} fullWidth={true}  />
                             <FieldSelect name="triggerSleep" label="触发休眠时间(min),在该时间段内,只会发送一次警报,建议选用10分钟" options={TriggerSleepEnum} fullWidth={true}  />
@@ -205,6 +218,7 @@ export default connect(
         form_dialog_notice:formValueSelector('form-yjsz/channel/dialog')(state,'noticeMethods'),//获取本表单中cacheType的值
         form_dialog_members:formValueSelector('form-yjsz/channel/dialog')(state,'noticePersons'),//获取本表单中cacheType的值
         page: state.yjsz_channel_redux.page,
+        userInfo: state.global_redux.userInfo,
     }),
     (dispatch, ownProps) => ({
         reqData: (params) => dispatch(

@@ -3,7 +3,7 @@ var config = {
     output: {
         path: './',
         filename: 'bundle.js',
-        publicPath:'/'
+        publicPath:'/log-frontend'
     },
     devServer: {
         port: 7777,
@@ -33,7 +33,7 @@ var config = {
             },
             {
                 test: /\.(png|jpg)$/,
-                loader: 'url-loader?limit=8192'
+                loader: 'url-loader?limit=18192'
             }
         ]
     },

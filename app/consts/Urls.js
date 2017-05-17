@@ -4,13 +4,13 @@
  */
 
 //所有URL前缀,测试环境
-export const URL_PREFIX='http://127.0.0.1:8080/log-statiscs';
+// export const URL_PREFIX='http://127.0.0.1:8080/log-statiscs';
 
 //所有URL前缀,付刚_测试环境
 // export const URL_PREFIX='http://10.0.70.248:8080/log-statiscs';
 
 //所有URL前缀,生产环境
-// export const URL_PREFIX='http://192.168.31.45:21102/log-statiscs';
+export const URL_PREFIX='http://192.168.31.45:21102/log-statiscs';
 
 
 

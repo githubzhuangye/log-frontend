@@ -13,6 +13,9 @@ import {
 
 import {pageSize, getDataByPage} from '../../../consts/TablePageSet'
 
+import {
+    getNameFromEnumByValue,
+}from '../../../consts/Enums'
 
 
 import RuleTable from '../common/RuleTable.jsx'
@@ -237,7 +240,7 @@ class YjszTable extends React.Component {
                field:'noticeMethods',
                component:(value,formatValue,context)=> (
                    value && value.map((v,i)=>
-                       <Chip   onClick={()=>{console.log(v);}} key={i}>{v}</Chip>
+                       <Chip   onClick={()=>{console.log(v);}} key={i}>{  getNameFromEnumByValue(autoWarningWays, v) }</Chip>
                    ))
            },
            {
