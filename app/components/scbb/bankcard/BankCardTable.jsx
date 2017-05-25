@@ -6,7 +6,6 @@ import MaterialPager from "../../common/MaterialPager.jsx";
 
 import {getBankCardTableData ,TABLE_FIELDS,TABLE_TITLES} from "./redux/Redux";
 
-
 /**
  * 身份证查询的表格
  */
@@ -37,6 +36,7 @@ class BankCardTable extends React.Component {
         let pager = <MaterialPager pageSize={pageSize} totalCount={totalCount} currentNumber={this.state.currentNumber} active={this.clickPager}/>
         return (
             <div>
+
                 <MaterialTable topTitle={topTitle} titleNames={TABLE_TITLES} data={TABLE_PAGE_DATA}
                                fieldAttributes={TABLE_FIELDS} pagerComponent={pager}
                 />

@@ -45,8 +45,8 @@ class Adjunct extends React.Component {
 
 export default connect (
     (state,ownProps)=>({
-        snack: state.yjsz_channel_redux.snack,
-        loading: state.yjsz_channel_redux.loading,
+        snack: state.yjsz_member_redux.snack,
+        loading: state.yjsz_member_redux.loading,
     }),
     (dispatch, ownProps) => ({
         closeSnack: () => dispatch({type: ACTION_SNACK_CLOSE}),

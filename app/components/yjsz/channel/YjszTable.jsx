@@ -259,7 +259,7 @@ class YjszTable extends React.Component {
                            fieldStyles={TABLE_STYLES} fieldEnums={TABLE_ENUMS}  fieldFormats={TABLE_FORMATERS} fieldComponents={TABLE_COMPONENTS}  fieldMerges={TABLE_MERGES}
                            pagerComponent={pager} rowSelection={this.selectRow}
                            rowTailComponents={[
-                               <RaisedButton label="关联" primary={true} action={this.openConnectAndShowData} style={{'marginRight': '1rem'}}/>,
+                               <RaisedButton label="联结" primary={true} action={this.openConnectAndShowData} style={{'marginRight': '1rem'}}/>,
                            ]}
                 />
 

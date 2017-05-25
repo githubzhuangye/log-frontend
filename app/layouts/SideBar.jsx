@@ -59,7 +59,7 @@ export default class SideBar extends React.Component{
             <SelectableList defaultValue={1}>
                 <Subheader>监控系统</Subheader>
                 <ListItem value={1} primaryText="今日观察" containerElement={<Link to="/log-frontend/jrgc" />}    />
-                <ListItem value={2} primaryText="实时监控"
+                <ListItem value={2} primaryText="实时监控" containerElement={<Link to="/log-frontend/ssjk" /> }
                           nestedItems={[
                               <ListItem value={21} primaryText="异常监控" />,
                               <ListItem value={22} primaryText="超时监控" />,

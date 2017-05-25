@@ -1,7 +1,10 @@
 import React from "react";
 import Paper from "material-ui/Paper";
-import styles from "./css/Main.css";
-
+import styles from "./css/ShfhscContent.css";
+import SearchForm from "./SearchForm.jsx";
+import YcbbIdCardTable from './YjszTable.jsx'
+import YjscDrawer from './YjszDrawer.jsx'
+import Adjunct from './Adjunct.jsx'
 
 /**
  *
@@ -12,7 +15,10 @@ export default class Main extends React.Component {
     render() {
         return (
             <Paper className={styles.root} zDepth={1}>
-                <span>正在施工中...</span>
+                <SearchForm/>
+                <YcbbIdCardTable/>
+                <YjscDrawer/>
+                <Adjunct/>
                 {this.props.children}
             </Paper>
         );

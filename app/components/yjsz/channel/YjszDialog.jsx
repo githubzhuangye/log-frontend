@@ -167,19 +167,18 @@ class YjszDialog extends React.Component {
                             <Field name={'channel'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={ChannelArray}  floatingLabelText={'通道名称'} floatingLabelFixed={true}  floatingLabelStyle ={{fontSize:'18px'}}  fullWidth={true} menuProps={{maxHeight:300}}  />
                             <Field name={'counter'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={CounterArray}  floatingLabelText={'柜台名称'} floatingLabelFixed={true}  floatingLabelStyle ={{fontSize:'18px'}}  fullWidth={true} menuProps={{maxHeight:300}}  />
                             <Field name={'product'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={ProductArray}  floatingLabelText={'产品名称'} floatingLabelFixed={true}  floatingLabelStyle ={{fontSize:'18px'}}  fullWidth={true} menuProps={{maxHeight:300}}  />
-                            <FieldSelect name="timeSlot" label="时间段" options={TimeSlotEnum} fullWidth={true}  />
+                            <FieldSelect name="timeSlot" label="统计时间段" options={TimeSlotEnum} fullWidth={true}  />
                             <div>
                                 <FieldSelect name="element" label="要素" options={autoform.autoElements} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}} />
                                 <FieldSelect name="condition" label="条件" options={autoform.autoConditionTypes} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
                                 <Field name={'limValue'} component={renderInput} type="text" floatingLabelText={'阀值'}   style={{width:'8rem'} }  />
                             </div>
-                            <FieldSelect name="triggerInterval" label="触发间隔时间(min),数值越小则检测的越频繁,建议选用1分钟" options={TriggerIntervalEnum} fullWidth={true}  />
-                            <FieldSelect name="triggerSleep" label="触发休眠时间(min),在该时间段内,只会发送一次警报,建议选用10分钟" options={TriggerSleepEnum} fullWidth={true}  />
-
+                            <Field name={'overTime'} component={renderInput} type="text" floatingLabelText={'超时值设置,单位毫秒'} fullWidth={true}  style={{'display':(  this.props.form_element=='duration'?'inline-block':'none')} }  />
+                            <FieldSelect name="triggerInterval" label="检测频率(min),数值越小则检测的越频繁,建议选用1分钟" options={TriggerIntervalEnum} fullWidth={true}  />
+                            <FieldSelect name="triggerSleep" label="预警休眠时间(min),在该时间段内只有出现更严重的警报才会发送" options={TriggerSleepEnum} fullWidth={true}  />
                             <MFieldSelect  name="noticePersons"  floatingLabelText={'预警通知名单(多选)'} options={autoform.autoUserInfo} checkedValues={this.props.form_dialog_members} fullWidth={true}  multiple={true}  />
                             <MFieldSelect  name="noticeMethods"  floatingLabelText={'预警方式(多选)'} options={autoform.autoWarningWays} checkedValues={this.props.form_dialog_notice} fullWidth={true}  multiple={true}  />
 
-                            {/*<FieldCheckBox name="noticeMethods" label="预警方式" options={autoform.autoWarningWays}/>*/}
                             <FieldRadio name="level" label="级别" options={autoform.autoWarningLevels}/>
                             {/*{error && <strong>{error}</strong>}*/}
                             <div style={{'textAlign': 'right', 'marginTop': '1rem'}}>
@@ -217,6 +216,7 @@ export default connect(
         values: getFormValues('form-yjsz/channel/dialog')(state),   //获取search表单的所有values
         form_dialog_notice:formValueSelector('form-yjsz/channel/dialog')(state,'noticeMethods'),//获取本表单中cacheType的值
         form_dialog_members:formValueSelector('form-yjsz/channel/dialog')(state,'noticePersons'),//获取本表单中cacheType的值
+        form_element:formValueSelector('form-yjsz/channel/dialog')(state,'element'),
         page: state.yjsz_channel_redux.page,
         userInfo: state.global_redux.userInfo,
     }),

@@ -1,11 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
 import {pageSize, getDataByPage} from "../../../consts/TablePageSet";
+import RaisedButton from 'material-ui/RaisedButton';
 import MaterialTable from "../../common/MaterialTable.jsx";
 import MaterialPager from "../../common/MaterialPager.jsx";
 
 import {getIdCardTableData ,TABLE_FIELDS,TABLE_TITLES} from "./redux/Redux";
-
+import {URL_PREFIX, URL_EXPORT_IDCARD_TIME_STATISCS_INFO} from '../../../consts/Urls';
 
 /**
  * 身份证查询的表格
@@ -15,10 +16,12 @@ class IdCardTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentNumber: 1,
+            currentNumber: 1
         };
         this.clickPager = this.clickPager.bind(this);
     }
+
+
 
     /**
      * 维护当前页码,该页码本组件用于提取数据,传入分页器用于显示页码
@@ -37,6 +40,7 @@ class IdCardTable extends React.Component {
         let pager = <MaterialPager pageSize={pageSize} totalCount={totalCount} currentNumber={this.state.currentNumber} active={this.clickPager}/>
         return (
             <div>
+
                 <MaterialTable topTitle={topTitle} titleNames={TABLE_TITLES} data={TABLE_PAGE_DATA}
                                fieldAttributes={TABLE_FIELDS} pagerComponent={pager}
                 />
@@ -44,6 +48,8 @@ class IdCardTable extends React.Component {
         );
     }
 }
+
+
 
 export default connect(
     (state, ownProps) => ({

@@ -31,7 +31,7 @@ class Adjunct extends React.Component {
                 {/*  提示条  */}
                 <Snackbar bodyStyle={{'backgroundColor': snack.color}} style={{'top': '4rem'}} open={snack.status}
                           message={snack.message}
-                          autoHideDuration={4000} onRequestClose={this.props.closeSnack}/>
+                          autoHideDuration={1000} onRequestClose={this.props.closeSnack}/>
 
                 {/*  loading画面  */}
                 <div style={{'display':'inline-block','position':'fixed','top':'50%','left':'50%','margin':'-30px 0 0 -30px','width':'60px','height':'60px'}}>

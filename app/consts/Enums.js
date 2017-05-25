@@ -35,36 +35,64 @@ export const BankCardProductToStr = {
 //时间段,单位:小时
 export const TimeSlotEnum = [
     {
-        name: '1小时',
+        name: '1分钟',
         value: 1
     },
     {
+        name: '5分钟',
+        value: 5
+    },
+    {
+        name: '10分钟',
+        value: 10
+    },
+    {
+        name: '15分钟',
+        value: 15
+    },
+    {
+        name: '30分钟',
+        value: 30
+    },
+    {
+        name: '45分钟',
+        value: 45
+    },
+    {
+        name: '1小时',
+        value: 60
+    },
+    {
         name: '2小时',
-        value: 2
+        value: 120
     },
     {
         name: '4小时',
-        value: 4
+        value: 240
     },
     {
         name: '8小时',
-        value: 8
+        value: 480
     },
     {
         name: '12小时',
-        value: 12
+        value: 720
     },
     {
         name: '24小时',
-        value: 24
+        value: 1440
     },
     {
         name: '48小时',
-        value: 48
+        value: 2880
     },
     {
         name: '72小时',
-        value: 72
+        value: 4320
+    },
+    {
+        name: '10天',
+        value: 14400
     },
 ]
 
@@ -98,47 +126,50 @@ export const TriggerIntervalEnum = [
         name: '4小时',
         value: 240
     },
+    {
+        name: '8小时',
+        value: 480
+    },
 ]
 
 //触发休眠时间,单位:分钟
 export const TriggerSleepEnum = [
     {
+        name: '不休眠',
+        value: 0
+    },
+    {
+        name: '15秒',
+        value: 15
+    },
+    {
         name: '1分钟',
-        value: 1
-    },
-    {
-        name: '5分钟',
-        value: 5
-    },
-    {
-        name: '10分钟',
-        value: 10
-    },
-    {
-        name: '30分钟',
-        value: 30
-    },
-    {
-        name: '1小时',
         value: 60
     },
     {
+        name: '5分钟',
+        value: 300
+    },
+    {
+        name: '10分钟',
+        value: 600
+    },
+    {
+        name: '30分钟',
+        value: 1800
+    },
+    {
+        name: '1小时',
+        value: 3600
+    },
+    {
         name: '3小时',
-        value: 180
+        value: 10800
     },
     {
         name: '6小时',
-        value: 360
+        value: 21600
     },
-    {
-        name: '12小时',
-        value: 720
-    },
-    {
-        name: '24小时',
-        value: 1440
-    },
-
 ]
 
 //预警名单
@@ -161,6 +192,10 @@ export const NoticeMembersEnum = [
 //服务器
 export const ServerNameEnum = [
     {
+        name: '选择全部',
+        value: '选择全部',
+    },
+    {
         name: '渠道',
         value: 'channel',
     },
@@ -171,6 +206,10 @@ export const ServerNameEnum = [
     {
         name: '银行卡认证',
         value: 'bankcard',
+    },
+    {
+        name: '产品',
+        value: 'product',
     },
     {
         name: '身份证认证',
@@ -673,6 +712,17 @@ export const RoleEnum = [
     },
 ]
 
+// 监控对象
+export const monObjArr=[
+    '银行卡',
+    '身份证'
+]
+
+// 数据类型
+export const dataTypeArr=[
+    '正常',
+    '异常'
+]
 
 /**
  * 从enum中获取指定value的name

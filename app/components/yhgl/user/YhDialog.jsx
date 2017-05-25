@@ -122,6 +122,7 @@ class YhDialog extends React.Component {
                             <Field name={'name'} component={renderInput} type="text" floatingLabelText={'用户名'} fullWidth={true} validate={[V.REQUIRED]} />
                             <Field name={'email'} component={renderInput} type="text"  floatingLabelText={'邮箱'} validate={[V.REQUIRED,V.EMAIL]} fullWidth={true}  />
                             <Field name={'mobile'} component={renderInput} type="text" floatingLabelText={'手机'} validate={[V.REQUIRED,V.MOBILE]} fullWidth={true}  />
+                            <Field name={'weixin'} component={renderInput} type="text" floatingLabelText={'微信'} validate={[V.REQUIRED]} fullWidth={true}  />
                             <Field name={'departMentName'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={departMentArray} floatingLabelText ={'部门名称'}  floatingLabelFixed={false} fullWidth={true}/>
                             <FieldSelect name="roleName" label="角色" options={RoleEnum} fullWidth={true}  />
 

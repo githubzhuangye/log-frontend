@@ -8,6 +8,9 @@ import global_redux from '../components/global/redux/Redux'
 //今日观察
 import jrgc_redux from '../components/jrgc/redux/Redux'
 
+//实时监控
+import ssjk_redux from '../components/ssjk/redux/Redux'
+
 //时长报表|身份证
 import scbb_idcard_redux from '../components/scbb/idcard/redux/Redux'
 
@@ -22,7 +25,7 @@ import ycbb_bankcard_redux from '../components/ycbb/bankcard/redux/Redux'
 
 //预警设置
 import yjsz_channel_redux from '../components/yjsz/channel/redux/Redux'
-
+import yjsz_member_redux from '../components/yjsz/member/redux/Redux'
 import yjsz_exception_redux from '../components/yjsz/exception/redux/Redux'
 
 //用户管理
@@ -37,6 +40,9 @@ const rootReducer = combineReducers({
 
     //今日观察
     jrgc_redux,
+
+    //实时监控
+    ssjk_redux,
 
     //时长报表|身份证
     scbb_idcard_redux,
@@ -53,6 +59,8 @@ const rootReducer = combineReducers({
     //预警设置
     //渠道预警设置
     yjsz_channel_redux,
+    //商户预警设置
+    yjsz_member_redux,
     //异常预警设置
     yjsz_exception_redux,
 

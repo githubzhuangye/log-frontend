@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import App from "../App.jsx";
 
 import Jrgc from "../views/Jrgc.jsx";
+
+import Ssjk from "../views/Ssjk.jsx";
 import {
    ACTION_SNACK_OPEN
 }from '../components/global/redux/Redux'
@@ -28,6 +30,8 @@ import YjszChannelDialog from '../components/yjsz/channel/YjszDialog.jsx'
 import YjszChannelConnect from '../components/yjsz/channel/YjszConnect.jsx'
 //商户预警
 import YjszMember from '../components/yjsz/member/Main.jsx'
+import YjszMemberDialog from '../components/yjsz/member/YjszDialog.jsx'
+import YjszMemberConnect from '../components/yjsz/member/YjszConnect.jsx'
 //异常预警
 import YjszException from '../components/yjsz/exception/Main.jsx'
 import YjszExceptionDialog from '../components/yjsz/exception/YjszDialog.jsx'
@@ -80,6 +84,10 @@ class RootRouter extends React.Component {
 
                     {/*  今日观察  */}
                     <Route path="jrgc" component={Jrgc}/>
+
+                    {/*  实时监控  */}
+                    <Route path="ssjk" component={Ssjk}/>
+
                     {/*  日志报表  */}
                     <Route path="rzbb">
                         {/*  商户返回时长报表  */}
@@ -96,7 +104,7 @@ class RootRouter extends React.Component {
                         </Route>
                     </Route>
                     {/*  预警设置 */}
-                    <Route path="yjsz" component={Yjsz} onEnter={this.authManager}   >
+                    <Route path="yjsz" component={Yjsz}   onEnter={this.authManager} >
                         {/*  通道预警  */}
                         <Route path="channel" component={YjszChannel}>
                             <Route path="dialog" component={YjszChannelDialog}/>
@@ -104,8 +112,8 @@ class RootRouter extends React.Component {
                         </Route>
                         {/*  商户预警  */}
                         <Route path="member" component={YjszMember}>
-                            <Route path="dialog" />
-                            <Route path="connect" />
+                            <Route path="dialog" component={YjszMemberDialog}/>
+                            <Route path="connect" component={YjszMemberConnect}/>
                         </Route>
                         <Route path="exception" component={YjszException}>
                             <Route path="dialog" components={YjszExceptionDialog}/>

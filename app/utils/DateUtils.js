@@ -54,12 +54,15 @@ export const getLastMonth=(date)=>{
 }
 
 
-/**
- * 生成时间字符串数组
- * @param beginDate
- * @param endDate
- */
-export function generateDateArray(beginDate,endDate){
 
+export const  showUserDate=(minute)=> {
+    if(minute<60){
+        return minute+'分钟'
+    }else{
+        let h=Math.round(minute/60);
+        let m=minute%60;
+        if(m==0)return h + '小时';
+        return h + '小时' + m + '分钟';
+    }
 
 }

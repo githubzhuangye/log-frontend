@@ -21,9 +21,6 @@ import {
     DatePicker
 } from 'material-ui'
 
-import {
-    ServerNameEnum
-}from '../../../consts/Enums'
 
 import {
     AutoComplete,
@@ -51,8 +48,9 @@ import {
    TriggerSleepEnum,
    NoticeMembersEnum,
     ChannelArray,
+    CounterArray,
+    ServerNameEnum,
     ProductArray,
-    CounterArray
 }from '../../../consts/Enums'
 
 import {
@@ -92,7 +90,7 @@ class YjszDialog extends React.Component {
         if (this.props.dialog.title == '添加') {
             params={
                 ...values,
-                ruleSetType:'异常预警',
+                ruleSetType:'商户预警',
                 createUser:this.props.userInfo.name,
                 updateUser:this.props.userInfo.name,
                 ruleList:[
@@ -105,7 +103,7 @@ class YjszDialog extends React.Component {
         } else {
             params={
                 ...values,
-                ruleSetType:'异常预警',
+                ruleSetType:'商户预警',
                 updateUser:this.props.userInfo.name,
                 ruleList:[
                     {
@@ -130,7 +128,7 @@ class YjszDialog extends React.Component {
     refresh() {
         let params = {
             ...this.props.from_select_values,
-            ruleSetType:'异常预警',
+            ruleSetType:'商户预警',
             pageSize: pageSize,
             currentNum: 1//默认查询第一页
         };
@@ -152,7 +150,13 @@ class YjszDialog extends React.Component {
         let hide_in_addmode = dialog.title == '添加' ? 'none' : 'inline-block';//创建时间之类的字段在添加时不显示
 
         //AutoComplete的过滤规则
-        const filter = (searchText, key) => searchText == '' || key.indexOf(searchText) !== -1;
+        const filter = (searchText, key) => {  console.log(key);return !searchText || searchText == '' || key.indexOf(searchText) !== -1};
+        //AutoComplete的字段映射关系
+        const dataSourceConfig = {
+                  value: 'orgCode',
+                  text: 'customerName',
+                };
+        console.log(auto.autoMember);
         return (
             <div>
                 <Dialog title={dialog.title} modal={false} open={dialog.status} onRequestClose={closeDialog}
@@ -166,9 +170,8 @@ class YjszDialog extends React.Component {
 
                             <Field name={'id'} component={renderInput} style={{display:'none'}}  type="text" />
                             <Field name={'ruleId'} component={renderInput} style={{display:hide_in_addmode}} disabled={disabledAtUpdate} type="text" label={'ID'} fullWidth={true} />
-                            <Field name={'exceptionType'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={auto.autoExceptionType} floatingLabelText ={'异常类型,可以不填'} floatingLabelFixed={true}  floatingLabelStyle ={{fontSize:'18px'}} fullWidth={true} menuProps={{maxHeight:300}}  />
-                            <Field name={'exceptionContent'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={auto.autoExceptionContent}  floatingLabelText={'异常内容,可以不填'} floatingLabelFixed={true}  floatingLabelStyle ={{fontSize:'18px'}}  fullWidth={true} menuProps={{maxHeight:300}}  />
-                            <FieldSelect name="serverName" label="服务器名称" options={ServerNameEnum} fullWidth={true}/>
+                            <Field name={'member'} component={AutoComplete} filter={AutoComplete.noFilter} openOnFocus={true} dataSource={auto.autoMember} dataSourceConfig={dataSourceConfig} floatingLabelText ={'商户名称'} floatingLabelFixed={true}  floatingLabelStyle ={{fontSize:'18px'}} fullWidth={true} menuProps={{maxHeight:300}}  />
+                            <Field name={'product'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={ProductArray}  floatingLabelText={'产品名称'} floatingLabelFixed={true}  floatingLabelStyle ={{fontSize:'18px'}}  fullWidth={true} menuProps={{maxHeight:300}}  />
                             <FieldSelect name="timeSlot" label="统计时间段" options={TimeSlotEnum} fullWidth={true}  />
                             <div>
                                 <FieldSelect name="element" label="要素" options={auto.autoElements} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}} />
@@ -206,22 +209,22 @@ const validate = values => {
 
 
 const form = reduxForm({
-    form: 'form-yjsz/exception/dialog',
+    form: 'form-yjsz/member/dialog',
     validate
 })(YjszDialog)
 
 export default connect(
     (state, ownProps) => ({
-        auto: state.yjsz_exception_redux.auto,
-        dialog: state.yjsz_exception_redux.dialog,
-        initialValues: state.yjsz_exception_redux.dialog.content,//初始值
-        from_select_values: getFormValues('form-yjsz/exception/select')(state),   //获取search表单的所有values
-        values: getFormValues('form-yjsz/exception/dialog')(state),   //获取search表单的所有values
-        form_dialog_notice:formValueSelector('form-yjsz/exception/dialog')(state,'noticeMethods'),
-        form_dialog_members:formValueSelector('form-yjsz/exception/dialog')(state,'noticePersons'),
-        form_element:formValueSelector('form-yjsz/exception/dialog')(state,'element'),
+        auto: state.yjsz_member_redux.auto,
+        dialog: state.yjsz_member_redux.dialog,
+        initialValues: state.yjsz_member_redux.dialog.content,//初始值
+        from_select_values: getFormValues('form-yjsz/member/select')(state),   //获取search表单的所有values
+        values: getFormValues('form-yjsz/member/dialog')(state),   //获取search表单的所有values
+        form_dialog_notice:formValueSelector('form-yjsz/member/dialog')(state,'noticeMethods'),//获取本表单中cacheType的值
+        form_dialog_members:formValueSelector('form-yjsz/member/dialog')(state,'noticePersons'),//获取本表单中cacheType的值
+        form_element:formValueSelector('form-yjsz/member/dialog')(state,'element'),
         userInfo: state.global_redux.userInfo,
-        page: state.yjsz_exception_redux.page,
+        page: state.yjsz_member_redux.page,
     }),
     (dispatch, ownProps) => ({
         reqData: (params) => dispatch(
@@ -247,7 +250,7 @@ export default connect(
         ),
         closeDialog: () => {
             dispatch({type: ACTION_DIALOG_CLOSE});
-            dispatch(push('/log-frontend/yjsz/exception'));
+            dispatch(push('/log-frontend/yjsz/member'));
         },
         selectRow:(selectedRow)=>dispatch({type:ACTION_SELECTROW,selectedRow})
     })

@@ -6,13 +6,16 @@ import AutoComplete from 'material-ui/AutoComplete';
 import RaisedButton from 'material-ui/RaisedButton';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 
-import {pageSize} from '../../../consts/TablePageSet'
+import {pageSize} from '../../../consts/TablePageSet';
+
+import {dateToString} from '../../../utils/DateUtils'
 
 import {
     URL_PREFIX,
     URL_YCBB_BANKCARD_PAGE,//分页模式
     URL_YCBB_BANKCARD_EXCEPTTYPES,
-    URL_YCBB_BANKCARD_EXCEPTCONTENTS
+    URL_YCBB_BANKCARD_EXCEPTCONTENTS,
+    URL_YCBB_BANKCARD_EXPORT
 } from '../../../consts/Urls'
 
 
@@ -99,6 +102,16 @@ class YcbbBankCardSearchForm extends React.Component {
         this.props.reqData(params);//请求URL的数据
     }
 
+    //导出按钮
+    handleExportButton() {
+        //this.props.exportData(params);//请求URL的数据
+        window.location.href=URL_PREFIX+URL_YCBB_BANKCARD_EXPORT+'?beginDate='
+            + dateToString(this.state.beginDate) + "&endDate=" + dateToString(this.state.endDate)
+            + "&id=''"
+            + "&exceptionType=" + this.state.exceptionType
+            + "&exceptionPhrase=" + this.state.exceptionContent;
+    }
+
 
     //组件渲染结束
     componentDidMount() {
@@ -168,6 +181,7 @@ class YcbbBankCardSearchForm extends React.Component {
                 </div>
                 <RaisedButton label="查询" primary={true} style={{margin: 12}}
                               onClick={this.handleSelectButton.bind(this)}/>
+                <RaisedButton label="导出" primary={true} style={{margin: 12}} onClick={this.handleExportButton.bind(this)}/>
                 {/*  loading动画  */}
                 <RefreshIndicator
                     size={60}

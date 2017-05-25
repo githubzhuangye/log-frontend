@@ -122,8 +122,8 @@ class YjszDrawer extends React.Component {
 
 export default connect(
     (state, ownProps) => ({
-        drawer: state.yjsz_exception_redux.drawer,
-        auto:state.yjsz_exception_redux.auto
+        drawer: state.yjsz_member_redux.drawer,
+        auto:state.yjsz_member_redux.auto
     }),
     (dispatch, ownProps) => ({
         closeDrawer: () => {

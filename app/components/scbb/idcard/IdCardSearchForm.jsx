@@ -5,8 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import {connect} from 'react-redux'
 
-import {URL_PREFIX, URL_GET_ALL_MEMBER_NAMES, URL_GET_IDCARD_TIME_STATISCS_INFO} from '../../../consts/Urls'
-import {getLastMonth} from '../../../utils/DateUtils'
+import {URL_PREFIX, URL_GET_ALL_MEMBER_NAMES, URL_GET_IDCARD_TIME_STATISCS_INFO,URL_EXPORT_IDCARD_TIME_STATISCS_INFO} from '../../../consts/Urls'
+import {getLastMonth,dateToString} from '../../../utils/DateUtils'
 
 import styles from './css/SearchForm .css'
 import {
@@ -55,7 +55,7 @@ class SearchForm extends React.Component {
     };
     handleChangeText = (text) => {
         this.setState({
-            searchText: text
+            searchText: text,
         });
     }
     handleNewRequest = () => {
@@ -72,6 +72,16 @@ class SearchForm extends React.Component {
             member: this.state.searchText,
         };
         this.props.reqData(params);//请求URL的数据
+    }
+
+    //导出按钮
+    handleExportButton() {
+        console.log(this.state.beginDate);
+        console.log(this.state.endDate);
+        console.log(this.state.searchText);
+         window.location.href=URL_PREFIX+URL_EXPORT_IDCARD_TIME_STATISCS_INFO+'?beginDate='
+         + dateToString(this.state.beginDate) + "&endDate=" + dateToString(this.state.endDate) + "&member=" + this.state.searchText;
+
     }
 
 
@@ -123,7 +133,7 @@ class SearchForm extends React.Component {
                                onUpdateInput={this.handleChangeText}
                               searchText={this.state.searchText}/>
                 <RaisedButton label="查询" primary={true} style={{margin: 12}} onClick={this.handleSelectButton.bind(this)}/>
-
+                <RaisedButton label="导出" primary={true} style={{margin: 12}} onClick={this.handleExportButton.bind(this)}/>
                 {/*  loading动画  */}
                 <RefreshIndicator
                     size={60}

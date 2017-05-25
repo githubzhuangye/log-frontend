@@ -1,7 +1,7 @@
 //1.其他静态字段
 //表格字段
-export const TABLE_TITLES = ['用户名','邮箱','手机','部门','角色','最后修改时间','操作'];
-export const TABLE_FIELDS = ['name','email','mobile','departMentName','roleName','modifyTime'];
+export const TABLE_TITLES = ['用户名','邮箱','手机','微信','部门','角色','最后修改时间','操作'];
+export const TABLE_FIELDS = ['name','email','mobile','weixin','departMentName','roleName','modifyTime'];
 export const TABLE_TOPTITLE = `用户管理`;
 
 

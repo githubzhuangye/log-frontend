@@ -2,102 +2,116 @@ import React from 'react';
 //1.其他静态字段
 //表格字段
 //字段中文名
-export const TABLE_TITLES = ['ID', '通道名', '柜台名', '产品名称',  '时间段', '要素', '条件',  '阀值','关系', '预警方式', '级别',  '连接'];
+export const TABLE_TITLES = ['ID', '商户名称', '产品名称',   '时间段', '要素', '条件',  '阀值','关系', '预警方式', '级别',  '连接'];
 //字段名
-export const TABLE_FIELDS = ['ruleId', 'channel', 'counter', 'product',  'timeSlot', 'element', 'condition','limValue', 'relation',  'noticeMethods', 'level'];
+export const TABLE_FIELDS = ['ruleId', 'member', 'product',   'timeSlot', 'element', 'condition','limValue', 'relation',  'noticeMethods', 'level'];
 
 //表格的标题
-export const TABLE_TOPTITLE = `通道预警规则设置`;
+export const TABLE_TOPTITLE = `商户预警规则设置`;
 
 
 //属性表格的字段
-export const PROPERTIES_DISPLAY_NAMES = ['ID','规则预警类型', '通道名', '柜台名', '产品名称',  '时间段(小时)', '要素', '条件', '关系表达式', '阀值', '预警方式','预警通知人员', '级别','检测频率(min)','预警休眠时间(ming)','创建者','创建时间','修改者','修改时期'];
-export const PROPERTIES_FIELDS = ['ruleId','ruleSetType', 'channel', 'counter', 'product',  'timeSlot', 'element', 'condition', 'relation', 'limValue', 'noticeMethods','noticePersons', 'level','triggerInterval','triggerSleep','createUser','createTime','updateUser','updateTime'];
+export const PROPERTIES_DISPLAY_NAMES = ['ID','规则预警类型', '商户名称', '产品名称',   '时间段', '要素', '条件', '关系表达式', '阀值', '预警方式','预警通知人员', '级别','检测频率(min)','预警休眠时间(min)','创建者','创建时间','修改者','修改时期'];
+export const PROPERTIES_FIELDS = ['ruleId','ruleSetType', 'member', 'product',   'timeSlot', 'element', 'condition', 'relation', 'limValue', 'noticeMethods','noticePersons', 'level','triggerInterval','triggerSleep','createUser','createTime','updateUser','updateTime'];
 
 //2.action静态字段
 
 // 1)表单部分
 
 //下拉列表,三个下拉列表一个接口
-export const ACTION_AUTO = 'yjsz/channel/ACTION_AUTO';
-export const ACTION_AUTO_SUCCESS = 'yjsz/channel/ACTION_AUTO_SUCCESS';
-export const ACTION_AUTO_ERROR = 'yjsz/channel/ACTION_AUTO_ERROR';
+export const ACTION_AUTO = 'yjsz/member/ACTION_AUTO';
+export const ACTION_AUTO_SUCCESS = 'yjsz/member/ACTION_AUTO_SUCCESS';
+export const ACTION_AUTO_ERROR = 'yjsz/member/ACTION_AUTO_ERROR';
 
 
-export const ACTION_AUTO_WARNING_WAYS='yjsz/channel/ACTION_AUTO_WARNING_WAYS'
-export const ACTION_AUTO_WARNING_WAYS_SUCCESS='yjsz/channel/ACTION_AUTO_WARNING_WAYS_SUCCESS'
-export const ACTION_AUTO_WARNING_WAYS_ERROR='yjsz/channel/ACTION_AUTO_WARNING_WAYS_ERROR'
+export const ACTION_AUTO_WARNING_WAYS='yjsz/member/ACTION_AUTO_WARNING_WAYS'
+export const ACTION_AUTO_WARNING_WAYS_SUCCESS='yjsz/member/ACTION_AUTO_WARNING_WAYS_SUCCESS'
+export const ACTION_AUTO_WARNING_WAYS_ERROR='yjsz/member/ACTION_AUTO_WARNING_WAYS_ERROR'
 
-export const ACTION_AUTO_RULE_TYPE='yjsz/channel/ACTION_AUTO_RULE_TYPE';
-export const ACTION_AUTO_RULE_TYPE_SUCCESS='yjsz/channel/ACTION_AUTO_RULE_TYPE_SUCCESS';
-export const ACTION_AUTO_RULE_TYPE_ERROR='yjsz/channel/ACTION_AUTO_RULE_TYPE_ERROR';
+export const ACTION_AUTO_RULE_TYPE='yjsz/member/ACTION_AUTO_RULE_TYPE';
+export const ACTION_AUTO_RULE_TYPE_SUCCESS='yjsz/member/ACTION_AUTO_RULE_TYPE_SUCCESS';
+export const ACTION_AUTO_RULE_TYPE_ERROR='yjsz/member/ACTION_AUTO_RULE_TYPE_ERROR';
 
-export const ACTION_AUTO_ELEMENTS='yjsz/channel/ACTION_AUTO_ELEMENTS'
-export const ACTION_AUTO_ELEMENTS_SUCCESS='yjsz/channel/ACTION_AUTO_ELEMENTS_SUCCESS'
-export const ACTION_AUTO_ELEMENTS_ERROR='yjsz/channel/ACTION_AUTO_ELEMENTS_ERROR'
+export const ACTION_AUTO_ELEMENTS='yjsz/member/ACTION_AUTO_ELEMENTS'
+export const ACTION_AUTO_ELEMENTS_SUCCESS='yjsz/member/ACTION_AUTO_ELEMENTS_SUCCESS'
+export const ACTION_AUTO_ELEMENTS_ERROR='yjsz/member/ACTION_AUTO_ELEMENTS_ERROR'
 
 
-export const ACTION_AUTO_PRODUCT_STATUS='yjsz/channel/ACTION_AUTO_PRODUCT_STATUS'
-export const ACTION_AUTO_PRODUCT_STATUS_SUCCESS='yjsz/channel/ACTION_AUTO_PRODUCT_STATUS_SUCCESS'
-export const ACTION_AUTO_PRODUCT_STATUS_ERROR='yjsz/channel/ACTION_AUTO_PRODUCT_STATUS_ERROR'
+export const ACTION_AUTO_PRODUCT_STATUS='yjsz/member/ACTION_AUTO_PRODUCT_STATUS'
+export const ACTION_AUTO_PRODUCT_STATUS_SUCCESS='yjsz/member/ACTION_AUTO_PRODUCT_STATUS_SUCCESS'
+export const ACTION_AUTO_PRODUCT_STATUS_ERROR='yjsz/member/ACTION_AUTO_PRODUCT_STATUS_ERROR'
 
-export const ACTION_AUTO_WARNING_LEVELS='yjsz/channel/ACTION_AUTO_WARNING_LEVELS'
-export const ACTION_AUTO_WARNING_LEVELS_SUCCESS='yjsz/channel/ACTION_AUTO_WARNING_LEVELS_SUCCESS'
-export const ACTION_AUTO_WARNING_LEVELS_ERROR='yjsz/channel/ACTION_AUTO_WARNING_LEVELS_ERROR'
+export const ACTION_AUTO_WARNING_LEVELS='yjsz/member/ACTION_AUTO_WARNING_LEVELS'
+export const ACTION_AUTO_WARNING_LEVELS_SUCCESS='yjsz/member/ACTION_AUTO_WARNING_LEVELS_SUCCESS'
+export const ACTION_AUTO_WARNING_LEVELS_ERROR='yjsz/member/ACTION_AUTO_WARNING_LEVELS_ERROR'
 
-export const ACTION_AUTO_CONDITION_TYPES='yjsz/channel/ACTION_AUTO_CONDITION_TYPES'
-export const ACTION_AUTO_CONDITION_TYPES_SUCCESS='yjsz/channel/ACTION_AUTO_CONDITION_TYPES_SUCCESS'
-export const ACTION_AUTO_CONDITION_TYPES_ERROR='yjsz/channel/ACTION_AUTO_CONDITION_TYPES_ERROR'
+export const ACTION_AUTO_CONDITION_TYPES='yjsz/member/ACTION_AUTO_CONDITION_TYPES'
+export const ACTION_AUTO_CONDITION_TYPES_SUCCESS='yjsz/member/ACTION_AUTO_CONDITION_TYPES_SUCCESS'
+export const ACTION_AUTO_CONDITION_TYPES_ERROR='yjsz/member/ACTION_AUTO_CONDITION_TYPES_ERROR'
 
+
+//下拉列表|异常类型
+export const ACTION_AUTO_ONE = 'yjsz/member/ACTION_AUTO_ONE';
+export const ACTION_AUTO_ONE_SUCCESS = 'yjsz/member/ACTION_AUTO_ONE_SUCCESS';
+export const ACTION_AUTO_ONE_ERROR = 'yjsz/member/ACTION_AUTO_ONE_ERROR';
+
+//下拉列表|异常内容
+export const ACTION_AUTO_TWO='yjsz/member/ACTION_AUTO_TWO';
+export const ACTION_AUTO_TWO_SUCCESS='yjsz/member/ACTION_AUTO_TWO_SUCCESS';
+export const ACTION_AUTO_TWO_ERROR='yjsz/member/ACTION_AUTO_TWO_ERROR';
 
 //用户
-export const ACTION_AUTO_USERINFO='yjsz/exception/ACTION_AUTO_USERINFO';
-export const ACTION_AUTO_USERINFO_SUCCESS='yjsz/exception/ACTION_AUTO_USERINFO_SUCCESS';
-export const ACTION_AUTO_USERINFO_ERROR='yjsz/exception/ACTION_AUTO_USERINFO_ERROR'
+export const ACTION_AUTO_USERINFO='yjsz/member/ACTION_AUTO_USERINFO';
+export const ACTION_AUTO_USERINFO_SUCCESS='yjsz/member/ACTION_AUTO_USERINFO_SUCCESS';
+export const ACTION_AUTO_USERINFO_ERROR='yjsz/member/ACTION_AUTO_USERINFO_ERROR'
+
+export const ACTION_AUTO_MEMBER='yjsz/member/ACTION_AUTO_USERINFO'
+export const ACTION_AUTO_MEMBER_SUCCESS='yjsz/member/ACTION_AUTO_MEMBER_SUCCESS'
+export const ACTION_AUTO_MEMBER_ERROR='yjsz/member/ACTION_AUTO_MEMBER_ERROR'
 
 // 2)表格部分
 
 //增删改查
-export const ACTION_PAGE = 'yjsz/channel/ACTION_PAGE';
-export const ACTION_PAGE_SUCCESS = 'yjsz/channel/ACTION_PAGE_SUCCESS';
-export const ACTION_PAGE_ERROR = 'yjsz/channel/ACTION_PAGE_ERROR';
+export const ACTION_PAGE = 'yjsz/member/ACTION_PAGE';
+export const ACTION_PAGE_SUCCESS = 'yjsz/member/ACTION_PAGE_SUCCESS';
+export const ACTION_PAGE_ERROR = 'yjsz/member/ACTION_PAGE_ERROR';
 
-export const ACTION_ADD = 'yjsz/channel/ACTION_ADD';
-export const ACTION_ADD_SUCCESS = 'yjsz/channel/ACTION_ADD_SUCCESS';
-export const ACTION_ADD_ERROR = 'yjsz/channel/ACTION_ADD_ERROR';
+export const ACTION_ADD = 'yjsz/member/ACTION_ADD';
+export const ACTION_ADD_SUCCESS = 'yjsz/member/ACTION_ADD_SUCCESS';
+export const ACTION_ADD_ERROR = 'yjsz/member/ACTION_ADD_ERROR';
 
-export const ACTION_UPDATE = 'yjsz/channel/ACTION_UPDATE';
-export const ACTION_UPDATE_SUCCESS = 'yjsz/channel/ACTION_UPDATE_SUCCESS';
-export const ACTION_UPDATE_ERROR = 'yjsz/channel/ACTION_UPDATE_ERROR';
+export const ACTION_UPDATE = 'yjsz/member/ACTION_UPDATE';
+export const ACTION_UPDATE_SUCCESS = 'yjsz/member/ACTION_UPDATE_SUCCESS';
+export const ACTION_UPDATE_ERROR = 'yjsz/member/ACTION_UPDATE_ERROR';
 
-export const ACTION_DELETE = 'yjsz/channel/ACTION_DELETE';
-export const ACTION_DELETE_SUCCESS = 'yjsz/channel/ACTION_DELETE_SUCCESS';
-export const ACTION_DELETE_ERROR = 'yjsz/channel/ACTION_DELETE_ERROR';
+export const ACTION_DELETE = 'yjsz/member/ACTION_DELETE';
+export const ACTION_DELETE_SUCCESS = 'yjsz/member/ACTION_DELETE_SUCCESS';
+export const ACTION_DELETE_ERROR = 'yjsz/member/ACTION_DELETE_ERROR';
 
-export const ACTION_SELECTROW='yjsz/channel/ACTION_SELECTROW';
+export const ACTION_SELECTROW='yjsz/member/ACTION_SELECTROW';
 
 //弹窗
-export const ACTION_DIALOG_OPEN = 'yjsz/channel/ACTION_DIALOG_OPEN';
-export const ACTION_DIALOG_CLOSE = 'yjsz/channel/ACTION_DIALOG_CLOSE';
+export const ACTION_DIALOG_OPEN = 'yjsz/member/ACTION_DIALOG_OPEN';
+export const ACTION_DIALOG_CLOSE = 'yjsz/member/ACTION_DIALOG_CLOSE';
 
 //右侧滑动条
-export const ACTION_DRAWER_OPEN = 'yjsz/channel/ACTION_DRAWER_OPEN';
-export const ACTION_DRAWER_CLOSE = 'yjsz/channel/ACTION_DRAWER_CLOSE'
+export const ACTION_DRAWER_OPEN = 'yjsz/member/ACTION_DRAWER_OPEN';
+export const ACTION_DRAWER_CLOSE = 'yjsz/member/ACTION_DRAWER_CLOSE'
 
 //弹出连接窗口
-export const ACTION_CONNECT_OPEN = 'yjsz/channel/ACTION_CONNECT_OPEN';
-export const ACTION_CONNECT_CLOSE = 'yjsz/channel/ACTION_CONNECT_CLOSE'
+export const ACTION_CONNECT_OPEN = 'yjsz/member/ACTION_CONNECT_OPEN';
+export const ACTION_CONNECT_CLOSE = 'yjsz/member/ACTION_CONNECT_CLOSE'
 
 //警示窗
-export const ACTION_ALERT_OPEN = 'yjsz/channel/ACTION_ALERT_OPEN';
-export const ACTION_ALERT_CLOSE = 'yjsz/channel/ACTION_ALERT_CLOSE';
+export const ACTION_ALERT_OPEN = 'yjsz/member/ACTION_ALERT_OPEN';
+export const ACTION_ALERT_CLOSE = 'yjsz/member/ACTION_ALERT_CLOSE';
 
 //提示条
-export const ACTION_SNACK_OPEN='yjsz/channel/ACTION_SNACK_OPEN'
-export const ACTION_SNACK_CLOSE = 'yjsz/channel/ACTION_SNACK_CLOSE';
+export const ACTION_SNACK_OPEN='yjsz/member/ACTION_SNACK_OPEN'
+export const ACTION_SNACK_CLOSE = 'yjsz/member/ACTION_SNACK_CLOSE';
 
 //详情
-export const ACTION_DETAIL = 'yjsz/channel/ACTION_DETAIL';
+export const ACTION_DETAIL = 'yjsz/member/ACTION_DETAIL';
 
 
 //4.初始化数据
@@ -119,7 +133,10 @@ const initData = {
         autoProductStatus:[],
         autoWarningLevels:[],
         autoConditionTypes:[],
-        autoUserInfo:[]
+        autoExceptionType:[],//下拉列表|异常类型
+        autoExceptionContent:[],//下拉列表|异常内容
+        autoUserInfo:[],//下拉列表|用户
+        autoMember:[],//商户
     },
     page: {
         currentNum: 1,//当前页
@@ -356,12 +373,80 @@ export default function Redux(state = initData, action) {
                 }
             }
 
+        //下拉列表|异常类型
+        case ACTION_AUTO_ONE:
+            console.log(ACTION_AUTO_ONE);
+            return {
+                ...state,
+            };
+        case ACTION_AUTO_ONE_SUCCESS:
+            console.log(ACTION_AUTO_ONE_SUCCESS);
+            if (!action.success) {
+                return {
+                    ...state,
+                    snack: {
+                        status: true,
+                        message: '下拉列表加载失败',
+                        color: '#FF4081'
+                    }
+                }
+            }
+            return {
+                ...state,
+                auto: {
+                    ...state.auto,
+                    autoExceptionType:action.payload,
+                }
+            }
+
+        case ACTION_AUTO_ONE_ERROR:
+            console.log(ACTION_AUTO_ONE_ERROR);
+            return{
+                ...state,
+                snack: {
+                    status: true,
+                    message: '下拉列表加载失败',
+                    color: '#FF4081'
+                }
+            }
+
+        //下拉列表|异常内容
+        case ACTION_AUTO_TWO:
+            console.log(ACTION_AUTO_TWO);
+            return {
+                ...state,
+            };
+        case ACTION_AUTO_TWO_SUCCESS:
+            console.log(ACTION_AUTO_TWO_SUCCESS);
+            if (!action.success) {
+                return {
+                    ...state,
+                    snack: {
+                        status: true,
+                        message: '下拉列表加载失败',
+                        color: '#FF4081'
+                    }
+                }
+            }
+            return {
+                ...state,
+                auto: {
+                    ...state.auto,
+                    autoExceptionContent:action.payload,
+                }
+            }
+        case ACTION_AUTO_TWO_ERROR:
+            console.log(ACTION_AUTO_TWO_ERROR);
+            return {
+                ...state
+            };
+
 
         //用户列表
         case ACTION_AUTO_USERINFO:
             console.log(ACTION_AUTO_USERINFO);return{
-            ...state,
-        }
+                ...state,
+            }
         case ACTION_AUTO_USERINFO_SUCCESS:
             console.log(ACTION_AUTO_USERINFO_SUCCESS);
             return {
@@ -376,6 +461,26 @@ export default function Redux(state = initData, action) {
             return{
                 ...state,
             }
+
+            //商户列表
+        case ACTION_AUTO_MEMBER:
+            return{
+                ...state
+            }
+        case ACTION_AUTO_MEMBER_SUCCESS:
+            return{
+                ...state,
+                auto:{
+                    ...state.auto,
+                    autoMember:[{orgCode:"所有商户",customerName:"所有商户"},...action.result.result.resultList]
+                }
+            }
+        case ACTION_AUTO_MEMBER_ERROR:
+            return{
+                ...state,
+            }
+
+
             //报警级别
         case ACTION_AUTO_WARNING_LEVELS:
             console.log(ACTION_AUTO_WARNING_LEVELS);

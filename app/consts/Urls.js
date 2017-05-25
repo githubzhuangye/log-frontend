@@ -4,15 +4,17 @@
  */
 
 //所有URL前缀,测试环境
-// export const URL_PREFIX='http://127.0.0.1:8080/log-statiscs';
+export const URL_PREFIX='http://127.0.0.1:8080/log-statiscs';
+export const URL_DICTIONARY_PREFIX='http://10.1.50.60:21102/manager'
 
-//所有URL前缀,付刚_测试环境
-// export const URL_PREFIX='http://10.0.70.248:8080/log-statiscs';
 
 //所有URL前缀,生产环境
-export const URL_PREFIX='http://192.168.31.45:21102/log-statiscs';
+// export const URL_PREFIX='http://192.168.31.45:21102/log-statiscs';
+// export const URL_DICTIONARY_PREFIX='http://192.168.30.130:21102/manager'
 
-
+//------------------------------实时监控-----------------------------------------------
+//实时监控
+export const URL_SSJK_SSJK='/ssjk/queryViewMonInfo.do';
 
 //------------------------------时长报表-----------------------------------------------
 
@@ -23,6 +25,10 @@ export const URL_GET_BANKCARD_TIME_STATISCS_INFO='/bankcard/getbankCardTimeStati
 //获取所有商户的名字
 export const URL_GET_ALL_MEMBER_NAMES='/idcard/getAllMemberNames.do';
 
+//时长报表-身份证-导出
+export const URL_EXPORT_IDCARD_TIME_STATISCS_INFO='/idcard/exportIdCardTimeStatiscsInfo.do';
+//时长报表-银行卡-导出
+export const URL_EXPORT_BANKCARD_TIME_STATISCS_INFO='/bankcard/exportbankCardTimeStatiscsInfo.do';
 //------------------------------异常报表-----------------------------------------------
 //根据LogId查询idcard的历史记录
 export const URL_IDCARD_DETAIL='';//从完整日志里搜寻
@@ -35,11 +41,15 @@ export const URL_YCBB_IDCARD_PAGE='/idcarderror/queryPageErrors.do';//分页模�
 export const URL_YCBB_IDCARD_EXCEPTTYPES='/idcarderror/exceptionTypes.do';
 export const URL_YCBB_IDCARD_EXCEPTCONTENTS='/idcarderror/exceptionPhrases.do';
 
+export const URL_YCBB_IDCARD_EXPORT='/idcarderror/queryErrorsExport.do';//导出
+
 //异常报表-银行卡
 export const URL_YCBB_BANKCARD='/bankcarderror/queryErrors.do';//非分页模式
 export const URL_YCBB_BANKCARD_PAGE='/bankcarderror/queryPageErrors.do';//分页模式
 export const URL_YCBB_BANKCARD_EXCEPTTYPES='/bankcarderror/exceptionTypes.do';
 export const URL_YCBB_BANKCARD_EXCEPTCONTENTS='/bankcarderror/exceptionPhrases.do';
+
+export const URL_YCBB_BANKCARD_EXPORT='/bankcarderror/queryErrorsExport.do';//导出
 
 //------------------------------今日头条-----------------------------------------------
 export const URL_JRTT='/important/getTopImportantMessage.do';
@@ -74,3 +84,8 @@ export const URL_YHGL_USER_INSERT='/userInfo/insertUserInfo.do'
 export const URL_YHGL_USER_LOGIN='/userInfo/login.do'
 //修改密码
 export const URL_YHGL_USER_SETPWD='/userInfo/setpwd.do'
+
+
+
+//------------------------------查询商户字典-----------------------------------------------
+export const URL_MEMBER_INFO='/account/findOrgCustomer'

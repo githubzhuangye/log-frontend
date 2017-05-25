@@ -11,7 +11,7 @@ export const TABLE_TOPTITLE = `异常预警规则设置`;
 
 
 //属性表格的字段
-export const PROPERTIES_DISPLAY_NAMES = ['ID','规则预警类型', '异常类型', '异常内容', '服务器名称',  '时间段(小时)', '要素', '条件', '关系表达式', '阀值', '预警方式','预警通知人员', '级别','触发间隔(min)','触发休眠时间(min)','创建者','创建时间','修改者','修改时期'];
+export const PROPERTIES_DISPLAY_NAMES = ['ID','规则预警类型', '异常类型', '异常内容', '服务器名称',  '时间段', '要素', '条件', '关系表达式', '阀值', '预警方式','预警通知人员', '级别','检测频率(min)','预警休眠时间(min)','创建者','创建时间','修改者','修改时期'];
 export const PROPERTIES_FIELDS = ['ruleId','ruleSetType', 'exceptionType', 'exceptionContent', 'serverName',  'timeSlot', 'element', 'condition', 'relation', 'limValue', 'noticeMethods','noticePersons', 'level','triggerInterval','triggerSleep','createUser','createTime','updateUser','updateTime'];
 
 //2.action静态字段

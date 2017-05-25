@@ -105,7 +105,7 @@ class YjszTable extends React.Component {
         //设置参数
         let params = {
             ...this.props.from_select_values,
-            ruleSetType:'异常预警',
+            ruleSetType:'商户预警',
             pageSize: pageSize,
             currentNum: i//默认查询第一页
         };
@@ -155,7 +155,7 @@ class YjszTable extends React.Component {
     refresh() {
         let params = {
             ...this.props.from_select_values,
-            ruleSetType:'异常预警',
+            ruleSetType:'商户预警',
             pageSize: pageSize,
             currentNum: 1//默认查询第一页
         };
@@ -247,7 +247,7 @@ class YjszTable extends React.Component {
                 format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
             },
             {
-                field: 'exceptionContent',
+                field: 'product',
                 format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
             },
         ];
@@ -295,12 +295,12 @@ class YjszTable extends React.Component {
 
 export default connect(
     (state, ownProps) => ({
-        page: state.yjsz_exception_redux.page,
-        form: state.yjsz_exception_redux.auto,
-        drawer: state.yjsz_exception_redux.drawer,
-        alert: state.yjsz_exception_redux.alert,
-        selectedRow:state.yjsz_exception_redux.selectedRow,//获取表格选中的行
-        from_select_values: getFormValues('form-yjsz/exception/select')(state),   //获取表单的所有values
+        page: state.yjsz_member_redux.page,
+        form: state.yjsz_member_redux.auto,
+        drawer: state.yjsz_member_redux.drawer,
+        alert: state.yjsz_member_redux.alert,
+        selectedRow:state.yjsz_member_redux.selectedRow,//获取表格选中的行
+        from_select_values: getFormValues('form-yjsz/member/select')(state),   //获取表单的所有values
     }),
     (dispatch, ownProps) => ({
         reqData: (params) => dispatch(
@@ -319,11 +319,11 @@ export default connect(
         ),
         openDialog: (dialog) => {
             dispatch({type: ACTION_DIALOG_OPEN, dialog});
-            dispatch(push('/log-frontend/yjsz/exception/dialog'));
+            dispatch(push('/log-frontend/yjsz/member/dialog'));
         },
         openConnect: (connect) => {
             dispatch({type: ACTION_CONNECT_OPEN, connect});
-            dispatch(push('/log-frontend/yjsz/exception/connect'));
+            dispatch(push('/log-frontend/yjsz/member/connect'));
         },
         openDrawer: (drawer) => {
             dispatch({type: ACTION_DRAWER_OPEN, drawer});

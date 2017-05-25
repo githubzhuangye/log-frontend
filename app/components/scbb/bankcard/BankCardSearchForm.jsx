@@ -5,8 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import {connect} from 'react-redux'
 
-import {URL_PREFIX, URL_GET_ALL_MEMBER_NAMES, URL_GET_BANKCARD_TIME_STATISCS_INFO} from '../../../consts/Urls'
-import {getLastMonth} from '../../../utils/DateUtils'
+import {URL_PREFIX, URL_GET_ALL_MEMBER_NAMES, URL_GET_BANKCARD_TIME_STATISCS_INFO, URL_EXPORT_BANKCARD_TIME_STATISCS_INFO} from '../../../consts/Urls'
+import {getLastMonth, dateToString} from '../../../utils/DateUtils'
 
 import styles from './css/SearchForm .css'
 import {
@@ -69,7 +69,13 @@ class BankCardSearchForm extends React.Component {
         this.props.reqData(params);//请求URL的数据
     }
 
+    //导出按钮
+    handleExportButton() {
 
+        //this.props.exportData(params);//请求URL的数据
+        window.location.href=URL_PREFIX+URL_EXPORT_BANKCARD_TIME_STATISCS_INFO+'?beginDate='
+            + dateToString(this.state.beginDate) + "&endDate=" + dateToString(this.state.endDate) + "&member=" + this.state.searchText;
+    }
     //组件渲染结束
     componentDidMount() {
         //自动填充商户信息下拉列表
@@ -118,6 +124,7 @@ class BankCardSearchForm extends React.Component {
                                onUpdateInput={this.handleChangeText}
                               searchText={this.state.searchText}/>
                 <RaisedButton label="查询" primary={true} style={{margin: 12}} onClick={this.handleSelectButton.bind(this)}/>
+                <RaisedButton label="导出" primary={true} style={{margin: 12}} onClick={this.handleExportButton.bind(this)}/>
                 {/*  loading动画  */}
                 <RefreshIndicator
                     size={60}

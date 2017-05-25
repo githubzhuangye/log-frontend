@@ -37,6 +37,9 @@ export const ACTION_DATA_SUCCESS = 'scbb/idcard/ACTION_DATA_SUCCESS';
 export const ACTION_DATA_ERROR = 'scbb/idcard/ACTION_DATA_ERROR';
 
 
+
+
+
 //3.action创建器
 
 
@@ -53,6 +56,7 @@ const initIdCardData = {
         },//请求的参数
         auto: []//下拉列表
     },
+    export:'',
     data: [],//返回的数据
     loading:'hide',//loading状态
 };
@@ -107,6 +111,8 @@ export default function Redux(state = initIdCardData, action) {
                 ...state,
                 loading:action.loading
             };
+
+
         default:
             return state
     }

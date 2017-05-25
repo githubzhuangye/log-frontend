@@ -7,11 +7,14 @@ import {connect} from 'react-redux'
 
 import {pageSize} from '../../../consts/TablePageSet'
 
+import {dateToString} from '../../../utils/DateUtils'
+
 import {
     URL_PREFIX,
     URL_YCBB_IDCARD_PAGE,//分页模式
     URL_YCBB_IDCARD_EXCEPTTYPES,
-    URL_YCBB_IDCARD_EXCEPTCONTENTS
+    URL_YCBB_IDCARD_EXCEPTCONTENTS,
+    URL_YCBB_IDCARD_EXPORT
 } from '../../../consts/Urls'
 
 
@@ -98,6 +101,16 @@ class YcbbIdCardSearchForm extends React.Component {
         this.props.reqData(params);//请求URL的数据
     }
 
+    //导出按钮
+    handleExportButton() {
+        //this.props.exportData(params);//请求URL的数据
+        window.location.href=URL_PREFIX+URL_YCBB_IDCARD_EXPORT+'?beginDate='
+            + dateToString(this.state.beginDate) + "&endDate=" + dateToString(this.state.endDate)
+            + "&id=''"
+            + "&exceptionType=" + this.state.exceptionType
+            + "&exceptionPhrase=" + this.state.exceptionContent;
+    }
+
     //组件渲染结束
     componentDidMount() {
         //下拉列表
@@ -165,6 +178,7 @@ class YcbbIdCardSearchForm extends React.Component {
                 </div>
                 <RaisedButton label="查询" primary={true} style={{margin: 12}}
                               onClick={this.handleSelectButton.bind(this)}/>
+                <RaisedButton label="导出" primary={true} style={{margin: 12}} onClick={this.handleExportButton.bind(this)}/>
                 <RefreshIndicator
                     size={60}
                     left={700}
