@@ -19,7 +19,9 @@ import {
 }from '../../../utils/DateUtils'
 import {
     getNameFromEnumByValue,
-    NoticeMembersEnum
+    NoticeMembersEnum,
+    WeixinChannelEnum
+
 }from '../../../consts/Enums'
 
 import {
@@ -81,6 +83,22 @@ class YjszDrawer extends React.Component {
                 }
             },
             {
+                field: 'exceptionType',
+                format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
+            },
+            {
+                field: 'exceptionContent',
+                format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
+            },
+            {
+                field: 'filterExceptionContent',
+                format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
+            },
+            {
+                field: 'triggerInterval',
+                format: (rv,fv,dataObj) => showUserDate(rv),
+            },
+            {
                 field: 'timeSlot',
                 format: (rv,fv,dataObj) => showUserDate(rv),
             },
@@ -89,12 +107,45 @@ class YjszDrawer extends React.Component {
                 format: (rv,fv,dataObj) => showUserDate(rv),
             },
             {
+                field: 'element',
+                format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
+            },
+            {
+                field: 'overTime',
+                format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
+            },
+            {
+                field: 'relation',
+                format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
+            },
+            {
+                field: 'condition',
+                format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
+            },
+            {
+                field: 'limValue',
+                format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
+            },
+            {
                 field: 'noticePersons',
                 format: (rv,fv,dataObj) => {
                     if (rv instanceof  Array ){
                         let result=''
                         rv.map((p, i) => {
                             result = result + getNameFromEnumByValue(auto.autoUserInfo, p) + '  ' ;
+                        } )
+                        return result;
+                    }
+                    return rv;
+                }
+            },
+            {
+                field: 'noticeWeixins',
+                format: (rv,fv,dataObj) => {
+                    if (rv instanceof  Array ){
+                        let result=''
+                        rv.map((p, i) => {
+                            result = result + getNameFromEnumByValue(WeixinChannelEnum, p) + '  ' ;
                         } )
                         return result;
                     }

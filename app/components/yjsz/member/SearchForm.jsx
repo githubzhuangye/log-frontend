@@ -30,7 +30,7 @@ import {
 import {
     URL_PREFIX,
     URL_DICTIONARY_PREFIX,
-    URL_YJSZ_CHANNEL_PAGE,
+    URL_YJSZ_RULE_PAGE,
 
     URL_YJSZ_AUTO_ELEMENTS,
     URL_YJSZ_AUTO_PRODUCT_STATUS,
@@ -44,6 +44,9 @@ import {
     URL_YCBB_IDCARD_EXCEPTCONTENTS,
 
     URL_MEMBER_INFO,
+    URL_YJSZ_RULE_SEARCH,
+
+    URL_YJSZ_RULE_MEMBER_EXPORT
 
 } from "../../../consts/Urls";
 import styles from "./css/SearchForm .css";
@@ -58,6 +61,10 @@ import {
     ACTION_PAGE_SUCCESS,
     ACTION_PAGE_ERROR,
 
+    ACTION_SEARCH,
+    ACTION_SEARCH_SUCCESS,
+    ACTION_SEARCH_ERROR,
+
     ACTION_DIALOG_OPEN,
     ACTION_ALERT_OPEN,
 
@@ -66,6 +73,8 @@ import {
     ACTION_AUTO,
     ACTION_AUTO_SUCCESS,
     ACTION_AUTO_ERROR,
+
+    ACTION_IMPORT_OPEN,
 
     ACTION_AUTO_WARNING_WAYS,
     ACTION_AUTO_WARNING_WAYS_SUCCESS,
@@ -201,10 +210,15 @@ class SearchForm extends React.Component {
             ...values,
             ruleSetType:'商户预警',
             pageSize: pageSize,
-            currentNum: 1//默认查询第一页
+            currentNum: 1,//默认查询第一页
+            ruleList:[
+                {
+                    ...values
+                }
+            ],
         };
 
-        this.props.reqData(params);//请求URL的数据
+        this.props.reqSearch(params);//请求URL的数据
     }
 
     //组件渲染结束
@@ -230,6 +244,23 @@ class SearchForm extends React.Component {
         this.props.reqMember();
     }
 
+    //导出按钮
+    handleExportButton() {
+        //this.props.exportData(params);//请求URL的数据
+        window.location.href=URL_PREFIX+URL_YJSZ_RULE_MEMBER_EXPORT+'?ruleSetType=商户预警';
+    }
+    //导入
+    handleImport(){
+        let connect = {
+            status: true,
+            title: '导入',
+            content: {},
+            buttonName: '确定'
+        };
+        this.props.openImport(connect);
+        console.log(connect);
+    }
+
     render() {
         //react-reudux提供的props
         const { auto}=this.props;
@@ -240,29 +271,43 @@ class SearchForm extends React.Component {
         const filter = (searchText, key) => searchText == '' || key.indexOf(searchText) !== -1;
         return (
             <div className={styles.root}>
-                <form className={styles.form} onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
-                    <div>
-                        <Field name={'member'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={auto.autoMember} floatingLabelText ={'商户名称'} floatingLabelFixed={true}  style={{'marginRight': '2rem','width':'10rem'}} textFieldStyle={{'width':'10rem'}} fullWidth={false}  menuProps={{maxHeight:300}}  />
-                        <Field name={'product'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={ProductArray}  floatingLabelText={'产品名称'} floatingLabelFixed={true}  style={{'marginRight': '2rem','width':'10rem'}} textFieldStyle={{'width':'10rem'}}  fullWidth={false} menuProps={{maxHeight:300}}  />
-                        <span>
-                            <RaisedButton label="重置" primary={true} disabled={pristine || submitting} style={{margin: 12}} onClick={reset}/>
-                            <RaisedButton type="submit" label={'查询'} primary={true} disabled={submitting}/>
-                            <FlatButton  label={this.state.expand?'关闭':'展开'} primary={true} style={{'marginLeft':'3rem'}} onClick={()=>this.setState({expand:!this.state.expand})} />
-                        </span>
+
+                <div style={{width:'100%',float:'left'}}>
+                    <form className={styles.form} style={{'float':'left'}} onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
+                        <div>
+                            <Field name={'ruleId'} component={renderInput} type="text" label={'ID'}   style={{width:'8rem'} } />
+                            <Field name={'member'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={auto.autoMember} floatingLabelText ={'商户名称'} floatingLabelFixed={true}  style={{'marginRight': '2rem','width':'10rem'}} textFieldStyle={{'width':'10rem'}} fullWidth={false}  menuProps={{maxHeight:300}}  />
+                            <Field name={'product'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={ProductArray}  floatingLabelText={'产品名称'} floatingLabelFixed={true}  style={{'marginRight': '2rem','width':'10rem'}} textFieldStyle={{'width':'10rem'}}  fullWidth={false} menuProps={{maxHeight:300}}  />
+                            <span>
+                                <RaisedButton label="重置" primary={true} disabled={pristine || submitting} style={{margin: 12}} onClick={reset}/>
+                                <RaisedButton type="submit" label={'查询'} primary={true} disabled={submitting}/>
+                                <FlatButton  label={this.state.expand?'关闭':'展开'} primary={true} style={{'marginLeft':'3rem'}} onClick={()=>this.setState({expand:!this.state.expand})} />
+                            </span>
+                        </div>
+                        <div style={{display:this.state.expand?'block':'none'}}>
+                            <FieldSelect name="element" floatingLabelText="预警要素" options={auto.autoElements} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
+                            <FieldSelect name="noticeMethods" floatingLabelText="预警方式" options={auto.autoWarningWays} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
+                            <FieldSelect name="level" floatingLabelText="预警级别" options={auto.autoWarningLevels} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
+                            <FieldSelect name="rule" floatingLabelText="预警规则" options={auto.autoRuleTypes} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
+                            <Field name="timeSlot" component={renderInput} type="text" label="时间段" style={{'width': '10rem'}}/>
+                        </div>
+                    </form>
+
+                    <div style={{'marginTop': '1rem','textAlign':'right','float':'right'}}>
+                        <RaisedButton label="导入" primary={true} style={{margin: 12}} onClick={this.handleImport.bind(this)}/>
+                        <RaisedButton label="导出" primary={true} onClick={this.handleExportButton.bind(this)}/>,
                     </div>
-                    <div style={{display:this.state.expand?'block':'none'}}>
-                        <FieldSelect name="element" floatingLabelText="预警要素" options={auto.autoElements} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
-                        <FieldSelect name="noticeMethods" floatingLabelText="预警方式" options={auto.autoWarningWays} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
-                        <FieldSelect name="level" floatingLabelText="预警级别" options={auto.autoWarningLevels} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
-                        <FieldSelect name="rule" floatingLabelText="预警规则" options={auto.autoRuleTypes} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
-                        <Field name="timeSlot" component={renderInput} type="text" label="时间段" style={{'width': '10rem'}}/>
-                    </div>
-                </form>
-                <div style={{'marginTop': '1rem','textAlign':'right'}}>
-                    <RaisedButton label="添加" primary={true} style={{margin: 12}} onClick={this.openAddDialog}/>
-                    <RaisedButton label="修改" primary={true} style={{margin: 12}} onClick={this.openUpdateDialog}/>,
-                    <RaisedButton label="删除" secondary={true} onClick={this.openDeleteWindow}/>,
                 </div>
+
+
+                <div style={{'marginTop': '1rem',width:'100%', float:'left',}}>
+                    <RaisedButton label="添加" primary={true} style={{margin: 12,'float':'left'}} onClick={this.openAddDialog}/>
+                    <span style={{float:'right'}}>
+                        <RaisedButton label="修改" primary={true} style={{margin: 12}} onClick={this.openUpdateDialog}/>,
+                        <RaisedButton label="删除" secondary={true}  onClick={this.openDeleteWindow}/>,
+                    </span>
+                </div>
+                <div style={{clear:'both'}}></div>
 
             </div>
         );
@@ -282,9 +327,16 @@ export default connect(
     (dispatch, ownProps) => ({
         reqData: (params) => dispatch(
             {
-                url: URL_PREFIX + URL_YJSZ_CHANNEL_PAGE,
+                url: URL_PREFIX + URL_YJSZ_RULE_PAGE,
                 params: params,
                 types: [ACTION_PAGE, ACTION_PAGE_SUCCESS, ACTION_PAGE_ERROR]
+            }
+        ),
+        reqSearch: (params) => dispatch(
+            {
+                url: URL_PREFIX + URL_YJSZ_RULE_SEARCH,
+                params: params,
+                types: [ACTION_SEARCH,ACTION_SEARCH_SUCCESS,ACTION_SEARCH_ERROR]
             }
         ),
         reqWarningWays: (params) => dispatch(
@@ -360,6 +412,10 @@ export default connect(
         openDialog: (dialog) => {
             dispatch({type: ACTION_DIALOG_OPEN, dialog});
             dispatch(push('/log-frontend/yjsz/member/dialog'));
+        },
+        openImport: (importDialog) => {
+            dispatch({type: ACTION_IMPORT_OPEN, importDialog});
+            dispatch(push('/log-frontend/yjsz/member/import'));
         },
         openAlert: () => dispatch({type: ACTION_ALERT_OPEN }),
         openSnack:(snack)=>dispatch({type:ACTION_SNACK_OPEN,snack})

@@ -67,12 +67,22 @@ export const URL_YJSZ_AUTO_WARNING_LEVELS='/ruleInfo/warningLevels.do'
 export const URL_YJSZ_AUTO_CONDITION_TYPES='/ruleInfo/conditionTypes.do'
 
 //通道预警
-export const URL_YJSZ_CHANNEL_PAGE='/ruleInfo/listRuleInfo.do'
-export const URL_YJSZ_CHANNEL_UPDATE='/ruleInfo/updateRuleInfo.do'
-export const URL_YJSZ_CHANNEL_DELETE='/ruleInfo/deleteRuleInfo.do'
-export const URL_YJSZ_CHANNEL_INSERT='/ruleInfo/insertRuleInfo.do'
+export const URL_YJSZ_RULE_PAGE='/ruleInfo/listRuleInfo.do'
+export const URL_YJSZ_RULE_SEARCH='/ruleInfo/getRuleInfo.do'
+export const URL_YJSZ_RULE_UPDATE='/ruleInfo/updateRuleInfo.do'
+export const URL_YJSZ_RULE_DELETE='/ruleInfo/deleteRuleInfo.do'
+export const URL_YJSZ_RULE_INSERT='/ruleInfo/insertRuleInfo.do'
+//导出规则
+export const URL_YJSZ_RULE_CHANNEL_EXPORT='/rule/queryChannelExport.do';//导出
+export const URL_YJSZ_RULE_MEMBER_EXPORT='/rule/queryMemberExport.do';//导出
+export const URL_YJSZ_RULE_EXCEPTION_EXPORT='/rule/queryExceptionExport.do';//导出
 
-//------------------------------用户管理-----------------------------------------------
+//导入规则
+export const URL_YJSZ_RULE_CHANNEL_IMPORT='';//导出
+export const URL_YJSZ_RULE_MEMBER_IMPORT='';//导出
+export const URL_YJSZ_RULE_EXCEPTION_IMPORT='';//导出
+
+//------------------------------用户管理----------------------------------------------------
 
 //用户管理
 export const URL_YHGL_USER_PAGE='/userInfo/listUserInfo.do'

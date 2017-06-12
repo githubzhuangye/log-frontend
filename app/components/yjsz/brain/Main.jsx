@@ -12,7 +12,7 @@ export default class Main extends React.Component {
     render() {
         return (
             <div>
-                <BreadHead firstLevel="预警设置" firstUrl="/yjsz/system" secondLevel={'系统预警'} secondUrl={'/yjsz/system'} disabled={false}/>
+                <BreadHead firstLevel="预警设置" firstUrl="/yjsz/brain" secondLevel={'智能预警'} secondUrl={'/yjsz/brain'} disabled={false}/>
                 <Paper  zDepth={1}>
                     <div>智能预警设置.....</div>
                 </Paper>

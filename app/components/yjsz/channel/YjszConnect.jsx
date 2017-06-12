@@ -22,8 +22,8 @@ import {
 
 import {
     URL_PREFIX,
-    URL_YJSZ_CHANNEL_UPDATE,
-    URL_YJSZ_CHANNEL_PAGE
+    URL_YJSZ_RULE_UPDATE,
+    URL_YJSZ_RULE_PAGE
 } from '../../../consts/Urls'
 
 
@@ -176,14 +176,14 @@ export default connect(
     (dispatch, ownProps) => ({
         reqData: (params) => dispatch(
             {
-                url: URL_PREFIX + URL_YJSZ_CHANNEL_PAGE,
+                url: URL_PREFIX + URL_YJSZ_RULE_PAGE,
                 params: params,
                 types: [ACTION_PAGE, ACTION_PAGE_SUCCESS, ACTION_PAGE_ERROR]
             }
         ),
         reqConnect: (params) => dispatch(
             {
-                url: URL_PREFIX + URL_YJSZ_CHANNEL_UPDATE ,
+                url: URL_PREFIX + URL_YJSZ_RULE_UPDATE ,
                 params: params,
                 types: [ACTION_UPDATE, ACTION_UPDATE_SUCCESS, ACTION_UPDATE_ERROR]
             }

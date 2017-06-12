@@ -103,12 +103,24 @@ export const TriggerIntervalEnum = [
         value: 1
     },
     {
+        name: '3分钟',
+        value: 3
+    },
+    {
         name: '5分钟',
         value: 5
     },
     {
+        name: '8分钟',
+        value: 8
+    },
+    {
         name: '10分钟',
         value: 10
+    },
+    {
+        name: '15分钟',
+        value: 15
     },
     {
         name: '30分钟',
@@ -127,10 +139,65 @@ export const TriggerIntervalEnum = [
         value: 240
     },
     {
+        name: '6小时',
+        value: 360
+    },
+    {
         name: '8小时',
         value: 480
     },
 ]
+
+/**
+ * 阀值更新模式
+ * @type {[*]}
+ */
+export const LimValueTypeEnum=[
+    {
+        name:'自动更新模式',
+        value:1,
+    },
+    {
+        name:'手动更新模式',
+        value:2,
+    },
+    {
+        name:'混合更新模式(先使用手动设置值,如果阀值有更新,也会自动更新)',
+        value:3,
+    },
+]
+
+export const MonitorCalculateTypeEnum=[
+    {
+        name:'峰值监控',
+        value:1
+    },
+    {
+        name:'实时监控',
+        value:2
+    },
+]
+
+export const ExceptionElementEnum=[
+    {
+        name:'全局笔数',
+        value:'message'
+    },
+    {
+        name:'异常笔数',
+        value:'exceptioncount'
+    },
+    {
+        name:'商户返回超时笔数',
+        value:'duration'
+    },
+    {
+        name:'渠道返回超时笔数',
+        value:'channelResponseTime'
+    },
+
+];
+
 
 //触发休眠时间,单位:分钟
 export const TriggerSleepEnum = [
@@ -196,24 +263,68 @@ export const ServerNameEnum = [
         value: '选择全部',
     },
     {
-        name: '渠道',
+        name: '渠道服务器',
         value: 'channel',
     },
     {
-        name: '商户认证',
+        name: '网关-商户认证服务器',
         value: 'member',
     },
     {
-        name: '银行卡认证',
+        name: '网关-银行卡认证服务器',
         value: 'bankcard',
     },
     {
-        name: '产品',
+        name: '产品服务器',
         value: 'product',
     },
     {
-        name: '身份证认证',
+        name: '网关-身份证认证服务器',
         value: 'idcard',
+    },
+]
+
+//微信频道
+export const WeixinChannelEnum=[
+    {
+        name:'新颜征信',
+        value:'1'
+    },
+    {
+        name:'研发部',
+        value:'2'
+    },
+    {
+        name:'产品部',
+        value:'3'
+    },
+    {
+        name:'销售部',
+        value:'4'
+    },
+    {
+        name:'市场部',
+        value:'5'
+    },
+    {
+        name:'运营部',
+        value:'6'
+    },
+    {
+        name:'模型部',
+        value:'7'
+    },
+    {
+        name:'商务部',
+        value:'8'
+    },
+    {
+        name:'监控VIP组',
+        value:'9'
+    },
+    {
+        name:'监控平台自身研发组',
+        value:'11'
     },
 ]
 

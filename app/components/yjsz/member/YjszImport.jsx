@@ -23,7 +23,8 @@ import {
 import {
     URL_PREFIX,
     URL_YJSZ_RULE_UPDATE,
-    URL_YJSZ_RULE_PAGE
+    URL_YJSZ_RULE_PAGE,
+    URL_YJSZ_RULE_MEMBER_IMPORT
 } from '../../../consts/Urls'
 
 
@@ -40,7 +41,7 @@ import {
     ACTION_UPDATE_SUCCESS,
     ACTION_UPDATE_ERROR,
 
-    ACTION_CONNECT_CLOSE
+    ACTION_IMPORT_CLOSE,
 } from './redux/Redux'
 
 
@@ -74,20 +75,17 @@ const FieldSelect = ({name, floatingLabelText, options, ...others}) => (
 /**
  * 详细表单
  */
-class YjszConnectDialog extends React.Component {
+class YjszImport extends React.Component {
 
     handleSubmit(values) {
-        let params={
-            id:this.props.connect.content.id,
-            fromRuleId:values.ruleId
-        }
-        this.props.reqConnect(params);
+
+        this.props.reqImport(values);
 
         //延迟重新请求数据
         setTimeout(this.refresh.bind(this),800);
 
         //重新跳回上一级
-        this.props.closeConnect();
+        this.props.closeImport();
     }
 
     //重新请求数据
@@ -104,27 +102,27 @@ class YjszConnectDialog extends React.Component {
 
 
     render() {
-        const {closeConnect, connect, autoform} =this.props;
+        const {closeConnect, importDialog, autoform} =this.props;
         //获取下拉列表
         const {autoCacheItem, autoCounterName, autoCacheType}=autoform;
         //redux-form提供的props
         const {error, handleSubmit, reset, submitting, pristine}=this.props;
 
         //控制表单的使用
-        let disabledAtUpdate = connect.title == '修改' ?true :false;//弹出修改窗口时不能修改
+        let disabledAtUpdate = importDialog.title == '修改' ?true :false;//弹出修改窗口时不能修改
 
         //控制表单的显隐
-        let hide_in_addmode = connect.title== '添加' ?'none' :'inline-block';//创建时间之类的字段在添加时不显示
+        let hide_in_addmode = importDialog.title== '添加' ?'none' :'inline-block';//创建时间之类的字段在添加时不显示
 
         return (
             <div>
                 <Dialog
-                    title={connect.title}
+                    title={importDialog.title}
                     actions={[
                         <FlatButton label="关闭" primary={true} keyboardFocused={true} onTouchTap={closeConnect}/>,
                     ]}
                     modal={false}
-                    open={connect.status}
+                    open={importDialog.status}
                     onRequestClose={closeConnect}
                     autoScrollBodyContent={true}
                 >
@@ -134,7 +132,7 @@ class YjszConnectDialog extends React.Component {
                             {error && <strong>{error}</strong>}
                             <div style={{'textAlign':'right','marginTop':'1rem'}}>
                                 <RaisedButton label="重置" primary={true} disabled={pristine || submitting} style={{margin: 12}} onClick={reset}/>
-                                <RaisedButton type="submit" label={connect.buttonName} primary={true} disabled={submitting}/>
+                                <RaisedButton type="submit" label={importDialog.buttonName} primary={true} disabled={submitting}/>
                             </div>
                         </form>
                     </div>
@@ -151,22 +149,24 @@ const validate = values => {
     const errors = {}
     if(!values.ruleId){
         errors.ruleId=`必须填写规则ID`
-    }else if (!/^\\w+\\d{4}$/.test(values.ruleId)) {
-        errors.ruleId = `缓存时间必须为含有E,D,C,加上4位数字`
+    }else if (isNaN(Number(values.ruleId))){
+        errors.ruleId=`缓存时间必须为数字`
+    }else if(values.ruleId.length != 4) {
+        errors.ruleId = `只能是4位数字`;
     }
     return errors;
 }
 
 
 const form = reduxForm({
-    form: 'form-yjsz/member/connect',
+    form: 'form-yjsz/member/import',
     validate
-})(YjszConnectDialog)
+})(YjszImport)
 
 export default connect(
     (state, ownProps) => ({
         autoform: state.yjsz_member_redux.auto,
-        connect: state.yjsz_member_redux.connect,
+        importDialog: state.yjsz_member_redux.importDialog,
         initialValues: state.yjsz_member_redux.dialog.content,//初始值
         from_select_values:getFormValues('form-yjsz/member/select')(state),   //获取search表单的所有values
         page:state.yjsz_member_redux.page,
@@ -179,15 +179,15 @@ export default connect(
                 types: [ACTION_PAGE, ACTION_PAGE_SUCCESS, ACTION_PAGE_ERROR]
             }
         ),
-        reqConnect: (params) => dispatch(
+        reqImport: (params) => dispatch(
             {
-                url: URL_PREFIX + URL_YJSZ_RULE_UPDATE ,
+                url: URL_PREFIX + URL_YJSZ_RULE_MEMBER_IMPORT ,
                 params: params,
                 types: [ACTION_UPDATE, ACTION_UPDATE_SUCCESS, ACTION_UPDATE_ERROR]
             }
         ),
-        closeConnect: () => {
-            dispatch({type: ACTION_CONNECT_CLOSE});
+        closeImport: () => {
+            dispatch({type: ACTION_IMPORT_CLOSE});
             dispatch(push('/log-frontend/yjsz/member'));
         }
     })

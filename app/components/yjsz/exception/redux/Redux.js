@@ -2,17 +2,17 @@ import React from 'react';
 //1.其他静态字段
 //表格字段
 //字段中文名
-export const TABLE_TITLES = ['ID', '异常类型', '异常内容', '服务器名称',  '时间段', '要素', '条件',  '阀值','关系', '预警方式', '级别',  '连接'];
+export const TABLE_TITLES = ['ID', '异常类型', '异常内容', '服务器名称','检测频率',  '统计时间段', '要素', '条件',  '阀值', '预警方式',  '状态', '连接'];
 //字段名
-export const TABLE_FIELDS = ['ruleId', 'exceptionType', 'exceptionContent', 'serverName',  'timeSlot', 'element', 'condition','limValue', 'relation',  'noticeMethods', 'level'];
+export const TABLE_FIELDS = ['ruleId', 'exceptionType', 'exceptionContent', 'serverName','triggerInterval',  'timeSlot', 'element', 'condition','limValue',   'noticeMethods', 'status'];
 
 //表格的标题
 export const TABLE_TOPTITLE = `异常预警规则设置`;
 
 
 //属性表格的字段
-export const PROPERTIES_DISPLAY_NAMES = ['ID','规则预警类型', '异常类型', '异常内容', '服务器名称',  '时间段', '要素', '条件', '关系表达式', '阀值', '预警方式','预警通知人员', '级别','检测频率(min)','预警休眠时间(min)','创建者','创建时间','修改者','修改时期'];
-export const PROPERTIES_FIELDS = ['ruleId','ruleSetType', 'exceptionType', 'exceptionContent', 'serverName',  'timeSlot', 'element', 'condition', 'relation', 'limValue', 'noticeMethods','noticePersons', 'level','triggerInterval','triggerSleep','createUser','createTime','updateUser','updateTime'];
+export const PROPERTIES_DISPLAY_NAMES = ['ID','规则预警类型', '异常类型', '异常内容','异常过滤内容', '服务器名称', '监控类型', '时间段', '要素','超时值', '条件', '关系表达式', '阀值', '预警方式','邮件短信通知人员','微信组别', '级别','检测频率(min)','预警休眠时间(min)','创建者','创建时间','修改者','修改时期'];
+export const PROPERTIES_FIELDS = ['ruleId','ruleSetType', 'exceptionType', 'exceptionContent','filterExceptionContent', 'serverName', 'monitorCalculateType', 'timeSlot', 'element','overTime', 'condition', 'relation', 'limValue', 'noticeMethods','noticePersons','noticeWeixins', 'level','triggerInterval','triggerSleep','createUser','createTime','updateUser','updateTime'];
 
 //2.action静态字段
 
@@ -71,6 +71,11 @@ export const ACTION_AUTO_USERINFO_ERROR='yjsz/exception/ACTION_AUTO_USERINFO_ERR
 export const ACTION_PAGE = 'yjsz/exception/ACTION_PAGE';
 export const ACTION_PAGE_SUCCESS = 'yjsz/exception/ACTION_PAGE_SUCCESS';
 export const ACTION_PAGE_ERROR = 'yjsz/exception/ACTION_PAGE_ERROR';
+
+export const ACTION_SEARCH = 'yjsz/exception/ACTION_SEARCH';
+export const ACTION_SEARCH_SUCCESS = 'yjsz/exception/ACTION_SEARCH_SUCCESS';
+export const ACTION_SEARCH_ERROR = 'yjsz/exception/ACTION_SEARCH_ERROR';
+
 
 export const ACTION_ADD = 'yjsz/exception/ACTION_ADD';
 export const ACTION_ADD_SUCCESS = 'yjsz/exception/ACTION_ADD_SUCCESS';
@@ -225,6 +230,52 @@ export default function Redux(state = initData, action) {
                 }
 
             };
+
+
+        //模糊查询
+        case ACTION_SEARCH:
+            return {
+                ...state,
+                loading: action.loading
+            };
+        case ACTION_SEARCH_SUCCESS:
+            //访问成功后,同时修改提交的表单参数和loading状态
+            if (!action.success) {
+                return {
+                    ...state,
+                    loading: action.loading,
+                    snack: {
+                        status: true,
+                        message: '数据加载失败',
+                        color: '#FF4081'
+                    }
+                };
+            }
+            return {
+                ...state,
+                form: {
+                    ...state.form,
+                    commitParams: action.params,
+                },
+                page: {
+                    data: action.payload,
+                    pageSize: action.params.pageSize,
+                    currentNum: action.params.currentNum,
+                    totalCount: action.payload.length
+                },
+                loading: action.loading
+            };
+        case ACTION_SEARCH_ERROR:
+            return {
+                ...state,
+                loading: action.loading,
+                snack: {
+                    status: true,
+                    message: '数据加载失败',
+                    color: '#FF4081'
+                }
+            };
+
 
         //删除
         case ACTION_DELETE:

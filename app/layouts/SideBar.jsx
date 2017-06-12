@@ -71,11 +71,13 @@ export default class SideBar extends React.Component{
                               <ListItem value={32} primaryText="异常报表"  containerElement={<Link to="/log-frontend/rzbb/ycbb/idcard" />}            />,
                           ]}
                 />
-                <ListItem value={4} primaryText="预警系统"    initiallyOpen={true}
+                <ListItem value={4} primaryText="预警设置"    initiallyOpen={true}
                           nestedItems={[
-                              <ListItem value={41} primaryText="异常预警"   />,
-                              <ListItem value={42} primaryText="业务预警"  />,
-                              <ListItem value={43} primaryText="预警设置"  containerElement={<Link to="/log-frontend/yjsz/channel" />}   />,
+                              <ListItem value={41} primaryText="通道预警"  containerElement={<Link to="/log-frontend/yjsz/channel" />} />,
+                              <ListItem value={42} primaryText="商户预警"  containerElement={<Link to="/log-frontend/yjsz/member" />} />,
+                              <ListItem value={43} primaryText="异常预警"  containerElement={<Link to="/log-frontend/yjsz/exception" />} />,
+                              <ListItem value={44} primaryText="系统预警"  containerElement={<Link to="/log-frontend/yjsz/system" />} />,
+                              <ListItem value={45} primaryText="智能预警"  containerElement={<Link to="/log-frontend/yjsz/brain" />} />,
                           ]}
                 />
                 <ListItem value={5} primaryText="服务器监控" initiallyOpen={false}

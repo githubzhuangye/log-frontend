@@ -1,5 +1,10 @@
 import React from "react";
-import Paper from "material-ui/Paper";
+import {
+   Paper,
+
+}from 'material-ui'
+import BreadHead from '../../../components/common/BreadHead.jsx'
+
 import styles from "./css/ShfhscContent.css";
 import SearchForm from "./SearchForm.jsx";
 import YcbbIdCardTable from './YjszTable.jsx'
@@ -14,13 +19,16 @@ export default class Main extends React.Component {
 
     render() {
         return (
-            <Paper className={styles.root} zDepth={1}>
-                <SearchForm/>
-                <YcbbIdCardTable/>
-                <YjscDrawer/>
-                <Adjunct/>
-                {this.props.children}
-            </Paper>
+            <div>
+                <BreadHead firstLevel="预警设置" firstUrl="/yjsz/channel" secondLevel={'通道预警'} secondUrl={'/yjsz/channel'} disabled={false}/>
+                <Paper className={styles.root} zDepth={1}>
+                    <SearchForm/>
+                    <YcbbIdCardTable/>
+                    <YjscDrawer/>
+                    <Adjunct/>
+                    {this.props.children}
+                </Paper>
+            </div>
         );
     }
 }

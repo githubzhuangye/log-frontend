@@ -29,7 +29,8 @@ import {
 }from '../../../consts/Enums'
 import {
     URL_PREFIX,
-    URL_YJSZ_CHANNEL_PAGE,
+    URL_YJSZ_RULE_PAGE,
+    URL_YJSZ_RULE_SEARCH,
 
     URL_YJSZ_AUTO_ELEMENTS,
     URL_YJSZ_AUTO_PRODUCT_STATUS,
@@ -42,6 +43,8 @@ import {
     URL_YCBB_IDCARD_EXCEPTTYPES   ,
     URL_YCBB_IDCARD_EXCEPTCONTENTS,
 
+    URL_YJSZ_RULE_EXCEPTION_EXPORT
+
 } from "../../../consts/Urls";
 import styles from "./css/SearchForm .css";
 
@@ -50,6 +53,10 @@ import {
     ACTION_PAGE,
     ACTION_PAGE_SUCCESS,
     ACTION_PAGE_ERROR,
+
+    ACTION_SEARCH,
+    ACTION_SEARCH_SUCCESS,
+    ACTION_SEARCH_ERROR,
 
     ACTION_DIALOG_OPEN,
     ACTION_ALERT_OPEN,
@@ -190,11 +197,17 @@ class SearchForm extends React.Component {
             ...values,
             ruleSetType:'异常预警',
             pageSize: pageSize,
-            currentNum: 1//默认查询第一页
+            currentNum: 1,//默认查询第一页
+            ruleList:[
+                {
+                    ...values
+                }
+            ],
         };
 
-        this.props.reqData(params);//请求URL的数据
+        this.props.reqSearch(params);//请求URL的数据
     }
+
 
     //组件渲染结束
     componentDidMount() {
@@ -218,6 +231,12 @@ class SearchForm extends React.Component {
         this.props.reqUserInfo();
     }
 
+    //导出按钮
+    handleExportButton() {
+        //this.props.exportData(params);//请求URL的数据
+        window.location.href=URL_PREFIX+URL_YJSZ_RULE_EXCEPTION_EXPORT+'?ruleSetType=异常预警';
+    }
+
     render() {
         //react-reudux提供的props
         const { auto}=this.props;
@@ -228,30 +247,43 @@ class SearchForm extends React.Component {
         const filter = (searchText, key) => searchText == '' || key.indexOf(searchText) !== -1;
         return (
             <div className={styles.root}>
-                <form className={styles.form} onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
-                    <div>
-                        <Field name={'exceptionType'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={auto.autoExceptionType} floatingLabelText ={'异常类型'} floatingLabelFixed={true}  style={{'marginRight': '2rem','width':'10rem'}} textFieldStyle={{'width':'10rem'}} fullWidth={false}  menuProps={{maxHeight:300}}  />
-                        <Field name={'exceptionContent'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={auto.autoExceptionContent}  floatingLabelText={'异常名称'} floatingLabelFixed={true}  style={{'marginRight': '2rem','width':'10rem'}} textFieldStyle={{'width':'10rem'}}  fullWidth={false} menuProps={{maxHeight:300}}  />
-                        <FieldSelect name="serverName" floatingLabelText="服务器名称" options={ServerNameEnum} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
-                        <span>
-                            <RaisedButton label="重置" primary={true} disabled={pristine || submitting} style={{margin: 12}} onClick={reset}/>
-                            <RaisedButton type="submit" label={'查询'} primary={true} disabled={submitting}/>
-                            <FlatButton  label={this.state.expand?'关闭':'展开'} primary={true} style={{'marginLeft':'3rem'}} onClick={()=>this.setState({expand:!this.state.expand})} />
-                        </span>
+
+                <div style={{width:'100%',float:'left'}}>
+                    <form className={styles.form} style={{float:'left'}} onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
+                        <div>
+                            <Field name={'ruleId'} component={renderInput} type="text" label={'ID'}   style={{width:'8rem'} } />
+                            <Field name={'exceptionType'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={auto.autoExceptionType} floatingLabelText ={'异常类型'} floatingLabelFixed={true}  style={{'marginRight': '2rem','width':'10rem'}} textFieldStyle={{'width':'10rem'}} fullWidth={false}  menuProps={{maxHeight:300}}  />
+                            <Field name={'exceptionContent'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={auto.autoExceptionContent}  floatingLabelText={'异常名称'} floatingLabelFixed={true}  style={{'marginRight': '2rem','width':'10rem'}} textFieldStyle={{'width':'10rem'}}  fullWidth={false} menuProps={{maxHeight:300}}  />
+                            <FieldSelect name="serverName" floatingLabelText="服务器名称" options={ServerNameEnum} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
+                            <span>
+                                <RaisedButton label="重置" primary={true} disabled={pristine || submitting} style={{margin: 12}} onClick={reset}/>
+                                <RaisedButton type="submit" label={'查询'} primary={true} disabled={submitting}/>
+                                <FlatButton  label={this.state.expand?'关闭':'展开'} primary={true} style={{'marginLeft':'3rem'}} onClick={()=>this.setState({expand:!this.state.expand})} />
+                            </span>
+                        </div>
+                        <div style={{display:this.state.expand?'block':'none'}}>
+                            <FieldSelect name="element" floatingLabelText="预警要素" options={auto.autoElements} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
+                            <FieldSelect name="noticeMethods" floatingLabelText="预警方式" options={auto.autoWarningWays} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
+                            <FieldSelect name="level" floatingLabelText="预警级别" options={auto.autoWarningLevels} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
+                            <FieldSelect name="rule" floatingLabelText="预警规则" options={auto.autoRuleTypes} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
+                            <Field name="timeSlot" component={renderInput} type="text" label="时间段" style={{'width': '10rem'}}/>
+                        </div>
+                    </form>
+
+                    <div style={{'marginTop': '1rem','textAlign':'right','float':'right'}}>
+                        <RaisedButton label="导入" primary={true} style={{margin: 12}} onClick={()=>console.log(1)}/>
+                        <RaisedButton label="导出" primary={true} onClick={this.handleExportButton.bind(this)}/>,
                     </div>
-                    <div style={{display:this.state.expand?'block':'none'}}>
-                        <FieldSelect name="element" floatingLabelText="预警要素" options={auto.autoElements} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
-                        <FieldSelect name="noticeMethods" floatingLabelText="预警方式" options={auto.autoWarningWays} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
-                        <FieldSelect name="level" floatingLabelText="预警级别" options={auto.autoWarningLevels} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
-                        <FieldSelect name="rule" floatingLabelText="预警规则" options={auto.autoRuleTypes} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
-                        <Field name="timeSlot" component={renderInput} type="text" label="时间段" style={{'width': '10rem'}}/>
-                    </div>
-                </form>
-                <div style={{'marginTop': '1rem','textAlign':'right'}}>
-                    <RaisedButton label="添加" primary={true} style={{margin: 12}} onClick={this.openAddDialog}/>
-                    <RaisedButton label="修改" primary={true} style={{margin: 12}} onClick={this.openUpdateDialog}/>,
-                    <RaisedButton label="删除" secondary={true} onClick={this.openDeleteWindow}/>,
                 </div>
+
+                <div style={{'marginTop': '1rem',width:'100%', float:'left',}}>
+                    <RaisedButton label="添加" primary={true} style={{margin: 12,'float':'left'}} onClick={this.openAddDialog}/>
+                    <span style={{float:'right'}}>
+                        <RaisedButton label="修改" primary={true} style={{margin: 12}} onClick={this.openUpdateDialog}/>,
+                        <RaisedButton label="删除" secondary={true}  onClick={this.openDeleteWindow}/>,
+                    </span>
+                </div>
+                <div style={{clear:'both'}}></div>
 
             </div>
         );
@@ -271,9 +303,16 @@ export default connect(
     (dispatch, ownProps) => ({
         reqData: (params) => dispatch(
             {
-                url: URL_PREFIX + URL_YJSZ_CHANNEL_PAGE,
+                url: URL_PREFIX + URL_YJSZ_RULE_PAGE,
                 params: params,
                 types: [ACTION_PAGE, ACTION_PAGE_SUCCESS, ACTION_PAGE_ERROR]
+            }
+        ),
+        reqSearch: (params) => dispatch(
+            {
+                url: URL_PREFIX + URL_YJSZ_RULE_SEARCH,
+                params: params,
+                types: [ACTION_SEARCH,ACTION_SEARCH_SUCCESS,ACTION_SEARCH_ERROR]
             }
         ),
         reqWarningWays: (params) => dispatch(

@@ -8,7 +8,8 @@ import {
     Snackbar,
     RaisedButton,
     FlatButton,
-    Chip
+    Chip,
+    Toggle
 }from 'material-ui'
 
 import {pageSize, getDataByPage} from '../../../consts/TablePageSet'
@@ -20,8 +21,9 @@ import  MaterialPager from '../../common/MaterialPager.jsx'
 
 import {
     URL_PREFIX,
-    URL_YJSZ_CHANNEL_DELETE,
-    URL_YJSZ_CHANNEL_PAGE
+    URL_YJSZ_RULE_DELETE,
+    URL_YJSZ_RULE_PAGE,
+    URL_YJSZ_RULE_UPDATE,
 } from '../../../consts/Urls'
 
 import {
@@ -69,12 +71,12 @@ import {
    getRowAndDataByNum
 }from './redux/Redux'
 
-import {
-    getNameFromEnumByValue,
-}from '../../../consts/Enums'
 
 import {
-    ServerNameEnum
+    ServerNameEnum,
+    getNameFromEnumByValue,
+    MonitorCalculateTypeEnum,
+
 }from '../../../consts/Enums'
 import {
     showUserDate
@@ -123,7 +125,9 @@ class YjszTable extends React.Component {
             this.props.selectRow(selectedRow)
         }
         //记录row
-        selectedRow=getRowAndDataByNum(this.props.page.data,rowNum);
+        //获取分页数据
+        let TABLE_PAGE_DATA = getDataByPage(this.props.page.data, this.props.page.currentNum, pageSize);
+        selectedRow=getRowAndDataByNum(TABLE_PAGE_DATA,rowNum);
         this.props.selectRow(selectedRow);
     }
 
@@ -191,6 +195,29 @@ class YjszTable extends React.Component {
         }
     }
 
+    //切换上下线
+    switchLine(isInputChecked,context){
+        console.log(isInputChecked);
+        console.log(context);
+        let commitStatus=isInputChecked?'online':'offline'
+        let params={
+            ...context,
+            id:context.row.id,
+            ruleSetType:'异常预警',
+            updateUser:this.props.userInfo.name,
+            status:commitStatus,
+            ruleList:[
+                {
+                    ...context
+                }
+            ],
+        }
+        this.props.reqUpdate(params);
+
+        //延迟重新请求数据
+        setTimeout(this.refresh.bind(this),800);
+
+    }
 
     render() {
         const { page, form,alert } =this.props;
@@ -203,8 +230,8 @@ class YjszTable extends React.Component {
         //字段样式器
         const TABLE_STYLES = [
             {
-                field: 'timeSlot',
-                style: (value) => value == 999 ? {color: 'red',} : {}
+                field: 'monitorCalculateType',
+                style: (value) => value == '实时监控' ? {color: 'red'} : {}
             },
             {
                 field: 'level',
@@ -230,6 +257,10 @@ class YjszTable extends React.Component {
                 field:'serverName',
                 enum:ServerNameEnum
             },
+            {
+                field:'monitorCalculateType',
+                enum: MonitorCalculateTypeEnum
+            },
         ]
 
         //字段格式化器
@@ -243,12 +274,32 @@ class YjszTable extends React.Component {
                 format: (rv,fv,dataObj) => showUserDate(rv),
             },
             {
+                field: 'triggerInterval',
+                format: (rv,fv,dataObj) => showUserDate(rv),
+            },
+            {
                 field: 'exceptionType',
                 format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
             },
             {
                 field: 'exceptionContent',
                 format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
+            },
+            {
+                field: 'element',
+                format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
+            },
+            {
+                field: 'condition',
+                format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
+            },
+            {
+                field: 'limValue',
+                format: (rv,fv,dataObj) => {
+                    if(!rv)return '/';
+                    else if(rv<1)return rv*100 +'%'
+                    else return rv;
+                }
             },
         ];
 
@@ -266,10 +317,21 @@ class YjszTable extends React.Component {
                component:(value,formatValue,context)=>
                    <FlatButton  title={formatValue}  secondary={true} onClick={this.openDrawerAndShowData.bind(this,context)} keyboardFocused={true} >{formatValue}</FlatButton>
            },
+            {
+                field:'status',
+                component:(value,formatValue,context)=>{
+                    let isline= !value || value=='online';
+                    let label=isline?'上线':'下线';
+                    let labelStyle=isline?{color:'rgb(0, 188, 212)'}:{}
+                    return(
+                        <Toggle label={label} labelPosition="right" defaultToggled={isline} labelStyle={labelStyle} onToggle={(e,isInputChecked)=>{ this.switchLine(isInputChecked,context);}} />
+                    )
+                }
+            },
        ];
 
         //字段合并器
-        const TABLE_MERGES=['relation','noticeMethods','level'];
+        const TABLE_MERGES=['relation','noticeMethods','level','status'];
 
         return (
             <div style={{'position': 'relative'}}>
@@ -300,21 +362,29 @@ export default connect(
         drawer: state.yjsz_exception_redux.drawer,
         alert: state.yjsz_exception_redux.alert,
         selectedRow:state.yjsz_exception_redux.selectedRow,//获取表格选中的行
+        userInfo: state.global_redux.userInfo,
         from_select_values: getFormValues('form-yjsz/exception/select')(state),   //获取表单的所有values
     }),
     (dispatch, ownProps) => ({
         reqData: (params) => dispatch(
             {
-                url: URL_PREFIX + URL_YJSZ_CHANNEL_PAGE,
+                url: URL_PREFIX + URL_YJSZ_RULE_PAGE,
                 params: params,
                 types: [ACTION_PAGE, ACTION_PAGE_SUCCESS, ACTION_PAGE_ERROR]
             }
         ),
         reqDelete: (params) => dispatch(
             {
-                url: URL_PREFIX + URL_YJSZ_CHANNEL_DELETE,
+                url: URL_PREFIX + URL_YJSZ_RULE_DELETE,
                 params: params,
                 types: [ACTION_DELETE, ACTION_DELETE_SUCCESS, ACTION_DELETE_ERROR]
+            }
+        ),
+        reqUpdate: (params) => dispatch(
+            {
+                url: URL_PREFIX + URL_YJSZ_RULE_UPDATE,
+                params: params,
+                types: [ACTION_UPDATE, ACTION_UPDATE_SUCCESS, ACTION_UPDATE_ERROR]
             }
         ),
         openDialog: (dialog) => {

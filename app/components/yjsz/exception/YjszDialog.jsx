@@ -22,7 +22,11 @@ import {
 } from 'material-ui'
 
 import {
-    ServerNameEnum
+    ServerNameEnum,
+    LimValueTypeEnum,
+    MonitorCalculateTypeEnum,
+    WeixinChannelEnum,
+    ExceptionElementEnum,
 }from '../../../consts/Enums'
 
 import {
@@ -57,9 +61,9 @@ import {
 
 import {
     URL_PREFIX,
-    URL_YJSZ_CHANNEL_INSERT,
-    URL_YJSZ_CHANNEL_UPDATE,
-    URL_YJSZ_CHANNEL_PAGE
+    URL_YJSZ_RULE_INSERT,
+    URL_YJSZ_RULE_UPDATE,
+    URL_YJSZ_RULE_PAGE
 
 } from '../../../consts/Urls'
 
@@ -168,20 +172,23 @@ class YjszDialog extends React.Component {
                             <Field name={'ruleId'} component={renderInput} style={{display:hide_in_addmode}} disabled={disabledAtUpdate} type="text" label={'ID'} fullWidth={true} />
                             <Field name={'exceptionType'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={auto.autoExceptionType} floatingLabelText ={'异常类型,可以不填'} floatingLabelFixed={true}  floatingLabelStyle ={{fontSize:'18px'}} fullWidth={true} menuProps={{maxHeight:300}}  />
                             <Field name={'exceptionContent'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={auto.autoExceptionContent}  floatingLabelText={'异常内容,可以不填'} floatingLabelFixed={true}  floatingLabelStyle ={{fontSize:'18px'}}  fullWidth={true} menuProps={{maxHeight:300}}  />
+                            {/*<Field name={'filterExceptionContent'} component={renderInput} type="text" floatingLabelText={'过滤的异常内容,内容用双竖线||隔开'} fullWidth={true}   />*/}
                             <FieldSelect name="serverName" label="服务器名称" options={ServerNameEnum} fullWidth={true}/>
-                            <FieldSelect name="timeSlot" label="统计时间段" options={TimeSlotEnum} fullWidth={true}  />
-                            <div>
-                                <FieldSelect name="element" label="要素" options={auto.autoElements} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}} />
+                            <FieldSelect name="monitorCalculateType" label="监控类型" options={MonitorCalculateTypeEnum} fullWidth={true}  />
+                            <div style={{'display':( !this.props.form_monitorType || this.props.form_monitorType ==1?'block':'none')} }  >
+                                <FieldSelect name="timeSlot" label="统计时间段" options={TimeSlotEnum} fullWidth={true}  />
+                                {/*<FieldSelect name="limValueType" label="阀值更新模式" options={LimValueTypeEnum} fullWidth={true}  />*/}
+                                <FieldSelect name="element" label="要素" options={ExceptionElementEnum} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}} />
                                 <FieldSelect name="condition" label="条件" options={auto.autoConditionTypes} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
-                                <Field name={'limValue'} component={renderInput} type="text" floatingLabelText={'阀值'}   style={{width:'8rem'} }  />
+                                <Field name={'limValue'} component={renderInput} type="text" floatingLabelText={'阀值'}   style={{width:'8rem'} } disabled={this.props.form_limValueType==1?true:false} />
                             </div>
-                            <Field name={'overTime'} component={renderInput} type="text" floatingLabelText={'超时值设置,单位毫秒'} fullWidth={true}  style={{'display':(  this.props.form_element=='duration'?'inline-block':'none')} }  />
+                            <Field name={'overTime'} component={renderInput} type="text" floatingLabelText={'超时值设置,单位毫秒'} fullWidth={true}  style={{'display':(  this.props.form_element=='duration' || this.props.form_element == 'channelResponseTime' ?'inline-block':'none')} }  />
                             <FieldSelect name="triggerInterval" label="检测频率(min),数值越小则检测的越频繁,建议选用1分钟" options={TriggerIntervalEnum} fullWidth={true}  />
                             <FieldSelect name="triggerSleep" label="预警休眠时间(min),在该时间段内只有出现更严重的警报才会发送" options={TriggerSleepEnum} fullWidth={true}  />
-                            <MFieldSelect  name="noticePersons"  floatingLabelText={'预警通知名单(多选)'} options={auto.autoUserInfo} checkedValues={this.props.form_dialog_members} fullWidth={true}  multiple={true}  />
                             <MFieldSelect  name="noticeMethods"  floatingLabelText={'预警方式(多选)'} options={auto.autoWarningWays} checkedValues={this.props.form_dialog_notice} fullWidth={true}  multiple={true}  />
-
-                            {/*<FieldCheckBox name="noticeMethods" label="预警方式" options={auto.autoWarningWays}/>*/}
+                            <MFieldSelect  name="noticePersons"  floatingLabelText={'短信,邮件,微信通知人员(多选)'} options={auto.autoUserInfo} checkedValues={this.props.form_dialog_members} fullWidth={true}  multiple={true}  style={{'display':(  this.props.form_noticeMethods && (this.props.form_noticeMethods.includes('email') || this.props.form_noticeMethods.includes('sms') )?'inline-block':'none')} } />
+                            <MFieldSelect  name="noticeWeixins"  floatingLabelText={'微信频道(多选)'} options={WeixinChannelEnum} checkedValues={this.props.form_weixins} fullWidth={true}  multiple={true} style={{'display':(  this.props.form_noticeMethods && this.props.form_noticeMethods.includes('weixin')?'inline-block':'none')} }  />
+                            <Field name={'specialBizChannel'} component={renderInput} type="text" floatingLabelText={'业务通道名称,如果预警方式里选择了通道,则需要填写该项'} fullWidth={true}  style={{'display':(  this.props.form_noticeMethods && this.props.form_noticeMethods.includes('business')?'inline-block':'none')} }  />
                             <FieldRadio name="level" label="级别" options={auto.autoWarningLevels}/>
                             {/*{error && <strong>{error}</strong>}*/}
                             <div style={{'textAlign': 'right', 'marginTop': '1rem'}}>
@@ -201,6 +208,44 @@ class YjszDialog extends React.Component {
 //验证
 const validate = values => {
     const errors = {}
+    //空值判断
+    if(!values.serverName){
+        errors.serverName='服务器必须选择';
+    }
+    if(!values.monitorCalculateType){
+        errors.monitorCalculateType = '必须选择监控类型';
+    }
+    if(values.monitorCalculateType == 1 && !values.timeSlot){
+        errors.timeSlot = '统计时间段必须填写';
+    }
+/*    if(values.monitorCalculateType == 1 && !values.limValueType){
+        errors.limValueType = '阀值更新模式必须填写';
+    }*/
+    if(values.monitorCalculateType == 1 && !values.element){
+        errors.element = '要素必须填写';
+    }
+    if(values.monitorCalculateType == 1 && !values.condition){
+        errors.condition = '条件必须填写';
+    }
+    if(values.monitorCalculateType == 1   && !values.limValue){
+        errors.limValue = '阀值必须填写';
+    }
+    if(!values.triggerInterval){
+        errors.triggerInterval = '检测频率必须选择';
+    }
+    if(values.monitorCalculateType == 1 && values.element=='duration' && !values.overTime){
+        errors.overTime = '必须填写超时的值';
+    }
+    if(!values.noticeMethods || values.noticeMethods.length==0){
+        errors.noticeMethods = '预警方式必须填写';
+    }
+    if(values.noticeMethods  && (values.noticeMethods.includes('sms') ||values.noticeMethods.includes('email') ) && (!values.noticePersons || values.noticePersons.length ==0)){
+        errors. noticePersons= '通知人员必须填写';
+    }
+    if(values.noticeMethods  && values.noticeMethods.includes('weixin') && (!values. noticeWeixins || values.noticeWeixins.length==0)){
+        errors. noticeWeixins= '微信频道必须填写';
+    }
+
     return errors;
 }
 
@@ -219,28 +264,33 @@ export default connect(
         values: getFormValues('form-yjsz/exception/dialog')(state),   //获取search表单的所有values
         form_dialog_notice:formValueSelector('form-yjsz/exception/dialog')(state,'noticeMethods'),
         form_dialog_members:formValueSelector('form-yjsz/exception/dialog')(state,'noticePersons'),
+        form_weixins:formValueSelector('form-yjsz/exception/dialog')(state,'noticeWeixins'),
         form_element:formValueSelector('form-yjsz/exception/dialog')(state,'element'),
+        form_exceptioncontent:formValueSelector('form-yjsz/exception/dialog')(state,'exceptionContent'),
+        form_monitorType:formValueSelector('form-yjsz/exception/dialog')(state,'monitorCalculateType'),
+        form_noticeMethods:formValueSelector('form-yjsz/exception/dialog')(state,'noticeMethods'),
+        form_limValueType:formValueSelector('form-yjsz/exception/dialog')(state,'limValueType'),
         userInfo: state.global_redux.userInfo,
         page: state.yjsz_exception_redux.page,
     }),
     (dispatch, ownProps) => ({
         reqData: (params) => dispatch(
             {
-                url: URL_PREFIX + URL_YJSZ_CHANNEL_PAGE,
+                url: URL_PREFIX + URL_YJSZ_RULE_PAGE,
                 params: params,
                 types: [ACTION_PAGE, ACTION_PAGE_SUCCESS, ACTION_PAGE_ERROR]
             }
         ),
         reqAdd: (params) => dispatch(
             {
-                url: URL_PREFIX + URL_YJSZ_CHANNEL_INSERT,
+                url: URL_PREFIX + URL_YJSZ_RULE_INSERT,
                 params: params,
                 types: [ACTION_ADD, ACTION_ADD_SUCCESS, ACTION_ADD_ERROR]
             }
         ),
         reqUpdate: (params) => dispatch(
             {
-                url: URL_PREFIX + URL_YJSZ_CHANNEL_UPDATE,
+                url: URL_PREFIX + URL_YJSZ_RULE_UPDATE,
                 params: params,
                 types: [ACTION_UPDATE, ACTION_UPDATE_SUCCESS, ACTION_UPDATE_ERROR]
             }

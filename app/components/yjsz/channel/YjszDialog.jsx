@@ -47,16 +47,19 @@ import {
    TriggerIntervalEnum,
    TriggerSleepEnum,
    NoticeMembersEnum,
+    LimValueTypeEnum,
     ChannelArray,
     ProductArray,
-    CounterArray
+    CounterArray,
+    WeixinChannelEnum,
+    MonitorCalculateTypeEnum,
 }from '../../../consts/Enums'
 
 import {
     URL_PREFIX,
-    URL_YJSZ_CHANNEL_INSERT,
-    URL_YJSZ_CHANNEL_UPDATE,
-    URL_YJSZ_CHANNEL_PAGE
+    URL_YJSZ_RULE_INSERT,
+    URL_YJSZ_RULE_UPDATE,
+    URL_YJSZ_RULE_PAGE
 
 } from '../../../consts/Urls'
 
@@ -136,7 +139,7 @@ class YjszDialog extends React.Component {
 
 
     render() {
-        const {closeDialog, dialog, autoform, form_dialog_methods,form_dialog_members} =this.props;
+        const {closeDialog, dialog, auto, form_dialog_methods,form_dialog_members} =this.props;
         //获取下拉列表
         //redux-form提供的props
         const {error, handleSubmit, reset, submitting, pristine}=this.props;
@@ -167,19 +170,23 @@ class YjszDialog extends React.Component {
                             <Field name={'channel'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={ChannelArray}  floatingLabelText={'通道名称'} floatingLabelFixed={true}  floatingLabelStyle ={{fontSize:'18px'}}  fullWidth={true} menuProps={{maxHeight:300}}  />
                             <Field name={'counter'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={CounterArray}  floatingLabelText={'柜台名称'} floatingLabelFixed={true}  floatingLabelStyle ={{fontSize:'18px'}}  fullWidth={true} menuProps={{maxHeight:300}}  />
                             <Field name={'product'} component={AutoComplete} filter={filter} openOnFocus={true} dataSource={ProductArray}  floatingLabelText={'产品名称'} floatingLabelFixed={true}  floatingLabelStyle ={{fontSize:'18px'}}  fullWidth={true} menuProps={{maxHeight:300}}  />
-                            <FieldSelect name="timeSlot" label="统计时间段" options={TimeSlotEnum} fullWidth={true}  />
-                            <div>
-                                <FieldSelect name="element" label="要素" options={autoform.autoElements} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}} />
-                                <FieldSelect name="condition" label="条件" options={autoform.autoConditionTypes} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
-                                <Field name={'limValue'} component={renderInput} type="text" floatingLabelText={'阀值'}   style={{width:'8rem'} }  />
+                            {/*<FieldSelect name="monitorCalculateType" label="监控类型" options={MonitorCalculateTypeEnum} fullWidth={true}  />*/}
+                            <div style={{'display':( !this.props.form_monitorType || this.props.form_monitorType ==1?'block':'none')} }  >
+                                <FieldSelect name="timeSlot" label="统计时间段" options={TimeSlotEnum} fullWidth={true}  />
+                                {/*<FieldSelect name="limValueType" label="阀值更新模式" options={LimValueTypeEnum} fullWidth={true}  />*/}
+                                <FieldSelect name="element" label="要素" options={auto.autoElements} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}} />
+                                <FieldSelect name="condition" label="条件" options={auto.autoConditionTypes} style={{'top': '.9rem', 'marginRight': '2rem', 'width': '12rem'}}/>
+                                <Field name={'limValue'} component={renderInput} type="text" floatingLabelText={'阀值'}   style={{width:'8rem'} } disabled={this.props.form_limValueType==1?true:false} />
                             </div>
                             <Field name={'overTime'} component={renderInput} type="text" floatingLabelText={'超时值设置,单位毫秒'} fullWidth={true}  style={{'display':(  this.props.form_element=='duration'?'inline-block':'none')} }  />
                             <FieldSelect name="triggerInterval" label="检测频率(min),数值越小则检测的越频繁,建议选用1分钟" options={TriggerIntervalEnum} fullWidth={true}  />
                             <FieldSelect name="triggerSleep" label="预警休眠时间(min),在该时间段内只有出现更严重的警报才会发送" options={TriggerSleepEnum} fullWidth={true}  />
-                            <MFieldSelect  name="noticePersons"  floatingLabelText={'预警通知名单(多选)'} options={autoform.autoUserInfo} checkedValues={this.props.form_dialog_members} fullWidth={true}  multiple={true}  />
-                            <MFieldSelect  name="noticeMethods"  floatingLabelText={'预警方式(多选)'} options={autoform.autoWarningWays} checkedValues={this.props.form_dialog_notice} fullWidth={true}  multiple={true}  />
+                            <MFieldSelect  name="noticeMethods"  floatingLabelText={'预警方式(多选)'} options={auto.autoWarningWays} checkedValues={this.props.form_dialog_notice} fullWidth={true}  multiple={true}  />
+                            <MFieldSelect  name="noticePersons"  floatingLabelText={'短信,邮件,微信通知人员(多选)'} options={auto.autoUserInfo} checkedValues={this.props.form_dialog_members} fullWidth={true}  multiple={true}  style={{'display':(  this.props.form_noticeMethods && (this.props.form_noticeMethods.includes('email') || this.props.form_noticeMethods.includes('sms') )?'inline-block':'none')} } />
+                            <MFieldSelect  name="noticeWeixins"  floatingLabelText={'微信频道(多选)'} options={WeixinChannelEnum} checkedValues={this.props.form_weixins} fullWidth={true}  multiple={true} style={{'display':(  this.props.form_noticeMethods && this.props.form_noticeMethods.includes('weixin')?'inline-block':'none')} }  />
+                            <Field name={'specialBizChannel'} component={renderInput} type="text" floatingLabelText={'业务通道名称,如果预警方式里选择了通道,则需要填写该项'} fullWidth={true}  style={{'display':(  this.props.form_noticeMethods && this.props.form_noticeMethods.includes('business')?'inline-block':'none')} }  />
+                            <FieldRadio name="level" label="级别" options={auto.autoWarningLevels}/>
 
-                            <FieldRadio name="level" label="级别" options={autoform.autoWarningLevels}/>
                             {/*{error && <strong>{error}</strong>}*/}
                             <div style={{'textAlign': 'right', 'marginTop': '1rem'}}>
                                 <RaisedButton label="重置" primary={true} disabled={pristine || submitting} style={{margin: 12}} onClick={reset}/>
@@ -198,6 +205,38 @@ class YjszDialog extends React.Component {
 //验证
 const validate = values => {
     const errors = {}
+    //空值判断
+    if(!values.timeSlot){
+        errors.timeSlot = '统计时间段必须填写';
+    }
+/*    if(!values.limValueType){
+        errors.limValueType = '阀值更新模式必须填写';
+    }*/
+    if(!values.element){
+        errors.element = '要素必须填写';
+    }
+    if(!values.condition){
+        errors.condition = '条件必须填写';
+    }
+    if(!values.limValue){
+        errors.limValue = '阀值必须填写';
+    }
+    if(!values.triggerInterval){
+        errors.triggerInterval = '检测频率必须填写';
+    }
+    if(values.element=='duration' && !values.overTime){
+        errors.overTime = '必须填写超时的值';
+    }
+    if(!values.noticeMethods || values.noticeMethods.length==0){
+        errors.noticeMethods = '预警方式必须填写';
+    }
+    if(values.noticeMethods  && (values.noticeMethods.includes('sms') ||values.noticeMethods.includes('email') ) && (!values.noticePersons || values.noticePersons.length ==0)){
+        errors. noticePersons= '通知人员必须填写';
+    }
+    if(values.noticeMethods  && values.noticeMethods.includes('weixin') && (!values. noticeWeixins || values.noticeWeixins.length==0)){
+        errors. noticeWeixins= '微信频道必须填写';
+    }
+
     return errors;
 }
 
@@ -209,35 +248,39 @@ const form = reduxForm({
 
 export default connect(
     (state, ownProps) => ({
-        autoform: state.yjsz_channel_redux.auto,
+        auto: state.yjsz_channel_redux.auto,
         dialog: state.yjsz_channel_redux.dialog,
         initialValues: state.yjsz_channel_redux.dialog.content,//初始值
         from_select_values: getFormValues('form-yjsz/channel/select')(state),   //获取search表单的所有values
         values: getFormValues('form-yjsz/channel/dialog')(state),   //获取search表单的所有values
+        form_monitorType:formValueSelector('form-yjsz/channel/dialog')(state,'monitorCalculateType'),
         form_dialog_notice:formValueSelector('form-yjsz/channel/dialog')(state,'noticeMethods'),//获取本表单中cacheType的值
         form_dialog_members:formValueSelector('form-yjsz/channel/dialog')(state,'noticePersons'),//获取本表单中cacheType的值
         form_element:formValueSelector('form-yjsz/channel/dialog')(state,'element'),
+        form_weixins:formValueSelector('form-yjsz/channel/dialog')(state,'noticeWeixins'),
+        form_noticeMethods:formValueSelector('form-yjsz/channel/dialog')(state,'noticeMethods'),
+        form_limValueType:formValueSelector('form-yjsz/channel/dialog')(state,'limValueType'),
         page: state.yjsz_channel_redux.page,
         userInfo: state.global_redux.userInfo,
     }),
     (dispatch, ownProps) => ({
         reqData: (params) => dispatch(
             {
-                url: URL_PREFIX + URL_YJSZ_CHANNEL_PAGE,
+                url: URL_PREFIX + URL_YJSZ_RULE_PAGE,
                 params: params,
                 types: [ACTION_PAGE, ACTION_PAGE_SUCCESS, ACTION_PAGE_ERROR]
             }
         ),
         reqAdd: (params) => dispatch(
             {
-                url: URL_PREFIX + URL_YJSZ_CHANNEL_INSERT,
+                url: URL_PREFIX + URL_YJSZ_RULE_INSERT,
                 params: params,
                 types: [ACTION_ADD, ACTION_ADD_SUCCESS, ACTION_ADD_ERROR]
             }
         ),
         reqUpdate: (params) => dispatch(
             {
-                url: URL_PREFIX + URL_YJSZ_CHANNEL_UPDATE,
+                url: URL_PREFIX + URL_YJSZ_RULE_UPDATE,
                 params: params,
                 types: [ACTION_UPDATE, ACTION_UPDATE_SUCCESS, ACTION_UPDATE_ERROR]
             }

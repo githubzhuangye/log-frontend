@@ -12,8 +12,7 @@ export default class Yjsz extends React.Component {
     render() {
         return (
             <div>
-                <BreadHead firstLevel="预警设置" firstUrl="/yjsz" disabled={true}/>
-                <TabBar/>
+                {/*<TabBar/>*/}
                 {this.props.children}
             </div>
         );

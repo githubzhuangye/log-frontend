@@ -56,6 +56,9 @@ export const getLastMonth=(date)=>{
 
 
 export const  showUserDate=(minute)=> {
+    if(!minute) {
+        return '/'
+    }
     if(minute<60){
         return minute+'分钟'
     }else{

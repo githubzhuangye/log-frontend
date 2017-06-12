@@ -8,7 +8,8 @@ import {
     Snackbar,
     RaisedButton,
     FlatButton,
-    Chip
+    Chip,
+    Toggle
 }from 'material-ui'
 
 import {pageSize, getDataByPage} from '../../../consts/TablePageSet'
@@ -17,14 +18,18 @@ import {
     getNameFromEnumByValue,
 }from '../../../consts/Enums'
 
+import {
+    showUserDate
+}from '../../../utils/DateUtils'
 
 import RuleTable from '../common/RuleTable.jsx'
 import  MaterialPager from '../../common/MaterialPager.jsx'
 
 import {
     URL_PREFIX,
-    URL_YJSZ_CHANNEL_DELETE,
-    URL_YJSZ_CHANNEL_PAGE
+    URL_YJSZ_RULE_UPDATE,
+    URL_YJSZ_RULE_DELETE,
+    URL_YJSZ_RULE_PAGE
 } from '../../../consts/Urls'
 
 import {
@@ -117,7 +122,9 @@ class YjszTable extends React.Component {
             this.props.selectRow(selectedRow)
         }
         //记录row
-        selectedRow=getRowAndDataByNum(this.props.page.data,rowNum);
+        //获取分页数据
+        let TABLE_PAGE_DATA = getDataByPage(this.props.page.data, this.props.page.currentNum, pageSize);
+        selectedRow=getRowAndDataByNum(TABLE_PAGE_DATA,rowNum);
         this.props.selectRow(selectedRow);
     }
 
@@ -186,6 +193,30 @@ class YjszTable extends React.Component {
     }
 
 
+    //切换上下线
+    switchLine(isInputChecked,context){
+        console.log(isInputChecked);
+        console.log(context);
+        let commitStatus=isInputChecked?'online':'offline'
+        let params={
+            ...context,
+            id:context.row.id,
+            ruleSetType:'通道预警',
+            updateUser:this.props.userInfo.name,
+            status:commitStatus,
+            ruleList:[
+                {
+                    ...context
+                }
+            ],
+        }
+        this.props.reqUpdate(params);
+
+        //延迟重新请求数据
+        setTimeout(this.refresh.bind(this),800);
+
+    }
+
     render() {
         const { page, form,alert } =this.props;
         const pager = <MaterialPager pageSize={page.pageSize} totalCount={page.totalCount} totalCountShow={true} totalPageShow={true} currentNumber={page.currentNum} active={this.clickPager}/>
@@ -230,7 +261,22 @@ class YjszTable extends React.Component {
             },
             {
                 field: 'timeSlot',
-                format: (rv,fv,dataObj) => fv + '小时'
+                format: (rv,fv,dataObj) => showUserDate(rv),
+            },
+            {
+                field: 'counter',
+                format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
+            },
+            {
+                field: 'product',
+                format: (rv,fv,dataObj) => !rv || rv==''?'/':fv
+            },
+            {
+                field: 'limValue',
+                format: (rv,fv,dataObj) => {
+                    if(rv<1)return rv*100 +'%'
+                    else return rv;
+                }
             },
         ];
 
@@ -248,6 +294,17 @@ class YjszTable extends React.Component {
                component:(value,formatValue,context)=>
                    <FlatButton  title={formatValue}  secondary={true} onClick={this.openDrawerAndShowData.bind(this,context)} keyboardFocused={true} >{formatValue}</FlatButton>
            },
+            {
+                field:'status',
+                component:(value,formatValue,context)=>{
+                    let isline= !value || value=='online';
+                    let label=isline?'上线':'下线';
+                    let labelStyle=isline?{color:'rgb(0, 188, 212)'}:{}
+                    return(
+                        <Toggle label={label} labelPosition="right" defaultToggled={isline} labelStyle={labelStyle} onToggle={(e,isInputChecked)=>{ this.switchLine(isInputChecked,context);}} />
+                    )
+                }
+            },
        ];
 
         //字段合并器
@@ -282,21 +339,29 @@ export default connect(
         drawer: state.yjsz_channel_redux.drawer,
         alert: state.yjsz_channel_redux.alert,
         selectedRow:state.yjsz_channel_redux.selectedRow,//获取表格选中的行
+        userInfo: state.global_redux.userInfo,
         from_select_values: getFormValues('form-yjsz/channel/select')(state),   //获取表单的所有values
     }),
     (dispatch, ownProps) => ({
         reqData: (params) => dispatch(
             {
-                url: URL_PREFIX + URL_YJSZ_CHANNEL_PAGE,
+                url: URL_PREFIX + URL_YJSZ_RULE_PAGE,
                 params: params,
                 types: [ACTION_PAGE, ACTION_PAGE_SUCCESS, ACTION_PAGE_ERROR]
             }
         ),
         reqDelete: (params) => dispatch(
             {
-                url: URL_PREFIX + URL_YJSZ_CHANNEL_DELETE,
+                url: URL_PREFIX + URL_YJSZ_RULE_DELETE,
                 params: params,
                 types: [ACTION_DELETE, ACTION_DELETE_SUCCESS, ACTION_DELETE_ERROR]
+            }
+        ),
+        reqUpdate: (params) => dispatch(
+            {
+                url: URL_PREFIX + URL_YJSZ_RULE_UPDATE,
+                params: params,
+                types: [ACTION_UPDATE, ACTION_UPDATE_SUCCESS, ACTION_UPDATE_ERROR]
             }
         ),
         openDialog: (dialog) => {

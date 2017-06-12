@@ -2,17 +2,17 @@ import React from 'react';
 //1.其他静态字段
 //表格字段
 //字段中文名
-export const TABLE_TITLES = ['ID', '通道名', '柜台名', '产品名称',  '时间段', '要素', '条件',  '阀值','关系', '预警方式', '级别',  '连接'];
+export const TABLE_TITLES = ['ID', '通道名', '柜台名', '产品名称', '检测频率', '统计时间段', '要素', '条件',  '阀值', '预警方式', '状态',  '连接'];
 //字段名
-export const TABLE_FIELDS = ['ruleId', 'channel', 'counter', 'product',  'timeSlot', 'element', 'condition','limValue', 'relation',  'noticeMethods', 'level'];
+export const TABLE_FIELDS = ['ruleId', 'channel', 'counter', 'product', 'triggerInterval', 'timeSlot', 'element', 'condition','limValue',   'noticeMethods', 'status'];
 
 //表格的标题
 export const TABLE_TOPTITLE = `通道预警规则设置`;
 
 
 //属性表格的字段
-export const PROPERTIES_DISPLAY_NAMES = ['ID','规则预警类型', '通道名', '柜台名', '产品名称',  '时间段(小时)', '要素', '条件', '关系表达式', '阀值', '预警方式','预警通知人员', '级别','检测频率(min)','预警休眠时间(ming)','创建者','创建时间','修改者','修改时期'];
-export const PROPERTIES_FIELDS = ['ruleId','ruleSetType', 'channel', 'counter', 'product',  'timeSlot', 'element', 'condition', 'relation', 'limValue', 'noticeMethods','noticePersons', 'level','triggerInterval','triggerSleep','createUser','createTime','updateUser','updateTime'];
+export const PROPERTIES_DISPLAY_NAMES = ['ID','规则预警类型', '通道名', '柜台名', '产品名称',  '时间段(小时)', '要素', '条件', '关系表达式', '阀值', '预警方式','邮件短信通知人员','微信组别', '级别','检测频率(min)','预警休眠时间(ming)','创建者','创建时间','修改者','修改时期'];
+export const PROPERTIES_FIELDS = ['ruleId','ruleSetType', 'channel', 'counter', 'product',  'timeSlot', 'element', 'condition', 'relation', 'limValue', 'noticeMethods','noticePersons','noticeWeixins', 'level','triggerInterval','triggerSleep','createUser','createTime','updateUser','updateTime'];
 
 //2.action静态字段
 
@@ -51,9 +51,9 @@ export const ACTION_AUTO_CONDITION_TYPES_ERROR='yjsz/channel/ACTION_AUTO_CONDITI
 
 
 //用户
-export const ACTION_AUTO_USERINFO='yjsz/exception/ACTION_AUTO_USERINFO';
-export const ACTION_AUTO_USERINFO_SUCCESS='yjsz/exception/ACTION_AUTO_USERINFO_SUCCESS';
-export const ACTION_AUTO_USERINFO_ERROR='yjsz/exception/ACTION_AUTO_USERINFO_ERROR'
+export const ACTION_AUTO_USERINFO='yjsz/channel/ACTION_AUTO_USERINFO';
+export const ACTION_AUTO_USERINFO_SUCCESS='yjsz/channel/ACTION_AUTO_USERINFO_SUCCESS';
+export const ACTION_AUTO_USERINFO_ERROR='yjsz/channel/ACTION_AUTO_USERINFO_ERROR'
 
 // 2)表格部分
 
@@ -61,6 +61,10 @@ export const ACTION_AUTO_USERINFO_ERROR='yjsz/exception/ACTION_AUTO_USERINFO_ERR
 export const ACTION_PAGE = 'yjsz/channel/ACTION_PAGE';
 export const ACTION_PAGE_SUCCESS = 'yjsz/channel/ACTION_PAGE_SUCCESS';
 export const ACTION_PAGE_ERROR = 'yjsz/channel/ACTION_PAGE_ERROR';
+
+export const ACTION_SEARCH = 'yjsz/channel/ACTION_SEARCH';
+export const ACTION_SEARCH_SUCCESS = 'yjsz/channel/ACTION_SEARCH_SUCCESS';
+export const ACTION_SEARCH_ERROR = 'yjsz/channel/ACTION_SEARCH_ERROR';
 
 export const ACTION_ADD = 'yjsz/channel/ACTION_ADD';
 export const ACTION_ADD_SUCCESS = 'yjsz/channel/ACTION_ADD_SUCCESS';
@@ -213,6 +217,51 @@ export default function Redux(state = initData, action) {
                 }
 
             };
+
+        //模糊查询
+        case ACTION_SEARCH:
+            return {
+                ...state,
+                loading: action.loading
+            };
+        case ACTION_SEARCH_SUCCESS:
+            //访问成功后,同时修改提交的表单参数和loading状态
+            if (!action.success) {
+                return {
+                    ...state,
+                    loading: action.loading,
+                    snack: {
+                        status: true,
+                        message: '数据加载失败',
+                        color: '#FF4081'
+                    }
+                };
+            }
+            return {
+                ...state,
+                form: {
+                    ...state.form,
+                    commitParams: action.params,
+                },
+                page: {
+                    data: action.payload,
+                    pageSize: action.params.pageSize,
+                    currentNum: action.params.currentNum,
+                    totalCount: action.payload.length
+                },
+                loading: action.loading
+            };
+        case ACTION_SEARCH_ERROR:
+            return {
+                ...state,
+                loading: action.loading,
+                snack: {
+                    status: true,
+                    message: '数据加载失败',
+                    color: '#FF4081'
+                }
+            };
+
 
         //删除
         case ACTION_DELETE:

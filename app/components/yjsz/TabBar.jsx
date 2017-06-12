@@ -33,7 +33,9 @@ class TabBar extends React.Component {
                 </Tab>
                 <Tab   label="异常预警设置" value="c"  onActive={()=>{this.props.dispatch(push('/log-frontend/yjsz/exception'));}}>
                 </Tab>
-                <Tab   label="系统预警设置" value="d"  onActive={()=>{this.props.dispatch(push('/log-frontend/yjsz/member'));}}>
+                <Tab   label="系统预警设置" value="d"  onActive={()=>{this.props.dispatch(push('/log-frontend/yjsz/system'));}}>
+                </Tab>
+                <Tab   label="智能预警设置" value="e"  onActive={()=>{this.props.dispatch(push('/log-frontend/yjsz/brain'));}}>
                 </Tab>
 
             </Tabs>

@@ -16,7 +16,8 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
 import {
     getNameFromEnumByValue,
-    NoticeMembersEnum
+    NoticeMembersEnum,
+    WeixinChannelEnum
 }from '../../../consts/Enums'
 
 import {
@@ -77,6 +78,19 @@ class YjszDrawer extends React.Component {
                         let result=''
                         rv.map((p, i) => {
                             result = result + getNameFromEnumByValue(auto.autoUserInfo, p) + '  ' ;
+                        } )
+                        return result;
+                    }
+                    return rv;
+                }
+            },
+            {
+                field: 'noticeWeixins',
+                format: (rv,fv,dataObj) => {
+                    if (rv instanceof  Array ){
+                        let result=''
+                        rv.map((p, i) => {
+                            result = result + getNameFromEnumByValue(WeixinChannelEnum, p) + '  ' ;
                         } )
                         return result;
                     }

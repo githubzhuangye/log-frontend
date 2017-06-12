@@ -5,6 +5,7 @@ import SearchForm from "./SearchForm.jsx";
 import YcbbIdCardTable from './YjszTable.jsx'
 import YjscDrawer from './YjszDrawer.jsx'
 import Adjunct from './Adjunct.jsx'
+import BreadHead from '../../../components/common/BreadHead.jsx'
 
 /**
  *
@@ -14,13 +15,16 @@ export default class Main extends React.Component {
 
     render() {
         return (
-            <Paper className={styles.root} zDepth={1}>
-                <SearchForm/>
-                <YcbbIdCardTable/>
-                <YjscDrawer/>
-                <Adjunct/>
-                {this.props.children}
-            </Paper>
+            <div>
+                <BreadHead firstLevel="预警设置" firstUrl="/yjsz/exception" secondLevel={'商户预警'} secondUrl={'/yjsz/member'} disabled={false}/>
+                <Paper className={styles.root} zDepth={1}>
+                    <SearchForm/>
+                    <YcbbIdCardTable/>
+                    <YjscDrawer/>
+                    <Adjunct/>
+                    {this.props.children}
+                </Paper>
+            </div>
         );
     }
 }

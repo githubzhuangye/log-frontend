@@ -32,12 +32,15 @@ import YjszChannelConnect from '../components/yjsz/channel/YjszConnect.jsx'
 import YjszMember from '../components/yjsz/member/Main.jsx'
 import YjszMemberDialog from '../components/yjsz/member/YjszDialog.jsx'
 import YjszMemberConnect from '../components/yjsz/member/YjszConnect.jsx'
+import YjszMemberImport from '../components/yjsz/member/YjszImport.jsx'
 //异常预警
 import YjszException from '../components/yjsz/exception/Main.jsx'
 import YjszExceptionDialog from '../components/yjsz/exception/YjszDialog.jsx'
 import YjszExceptionConnect from '../components/yjsz/exception/YjszConnect.jsx'
 //系统预警
 import YjszSystem from '../components/yjsz/system/Main.jsx'
+//智能预警
+import YjszBrain from '../components/yjsz/brain/Main.jsx'
 
 /** 系统设置 */
 import Yhgl from '../views/Yhgl.jsx'
@@ -104,7 +107,7 @@ class RootRouter extends React.Component {
                         </Route>
                     </Route>
                     {/*  预警设置 */}
-                    <Route path="yjsz" component={Yjsz}   onEnter={this.authManager} >
+                    <Route path="yjsz" component={Yjsz}  >
                         {/*  通道预警  */}
                         <Route path="channel" component={YjszChannel}>
                             <Route path="dialog" component={YjszChannelDialog}/>
@@ -114,12 +117,18 @@ class RootRouter extends React.Component {
                         <Route path="member" component={YjszMember}>
                             <Route path="dialog" component={YjszMemberDialog}/>
                             <Route path="connect" component={YjszMemberConnect}/>
+                            <Route path="import" component={YjszMemberImport}/>
                         </Route>
+                        {/*  异常预警  */}
                         <Route path="exception" component={YjszException}>
                             <Route path="dialog" components={YjszExceptionDialog}/>
                             <Route path="connect" components={YjszExceptionConnect} />
                         </Route>
+                        {/*  系统预警  */}
                         <Route path="system" component={YjszSystem}>
+                        </Route>
+                        {/*  系统预警  */}
+                        <Route path="brain" component={YjszBrain}>
                         </Route>
                     </Route>
 
